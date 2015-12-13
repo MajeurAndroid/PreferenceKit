@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_widgets_side_margins">10dp</dimen>
+    <dimen name="circlepicker_radius">70dp</dimen>
+</resources>

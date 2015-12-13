@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/preference_base" />
+
+    <RadioGroup android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/default_widgets_side_margins"
+        android:layout_marginStart="@dimen/default_widgets_side_margins"
+        android:layout_marginRight="@dimen/default_widgets_side_margins"
+        android:layout_marginEnd="@dimen/default_widgets_side_margins"
+        android:gravity="center"
+        android:showDividers="middle"
+        android:divider="?android:listDivider"
+        android:dividerPadding="4dp" />
+
+</LinearLayout>

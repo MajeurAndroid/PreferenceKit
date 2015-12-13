@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.majeur.preferencekit.Preference
+        android:title="BasePreference"
+        android:summary="dkfjdjfkds"
+        android:key="base"
+        app:locked="true"
+        app:lockedIcon="@mipmap/ic_launcher"/>
+
+    <com.majeur.preferencekit.CheckBoxPreference
+        android:title="CheckBoxPreference"
+        android:key="checkbox" />
+
+    <com.majeur.preferencekit.SeekBarPreference
+        android:title="SeekBarPreference"
+        android:summary="This is a seekbar prefrence"
+        android:key="seekbar"
+        android:defaultValue="50"
+        app:maxValue="100"
+        app:knobColor="#80cbc4"/>
+
+    <com.majeur.preferencekit.NumberPickerPreference
+        android:title="NumberPickerPreference"
+        android:summary="Summary"
+        android:key="numberpicker"
+        android:defaultValue="3"
+        app:maxValue="15"
+        app:minValue="2"
+        app:showValueInSummary="true"
+        android:icon="@mipmap/ic_launcher"/>
+
+    <com.majeur.preferencekit.SpinnerPreference
+        android:title="SpinnerPreference"
+        android:summary="This is a spinner preference"
+        android:key="spinner"
+        app:entries="@array/entries"
+        app:entryValues="@array/entryValues"/>
+
+    <com.majeur.preferencekit.CirclePickerPreference
+        android:title="CirclePickerPreference"
+        android:summary="This is a circle picker preference"
+        android:key="circleicker"
+        android:defaultValue="2"
+        app:minValue="1"
+        app:maxValue="3"
+        app:showValueInSummary="true"/>
+
+    <com.majeur.preferencekit.DoubleCirclePickerPreference
+        android:title="DoubleCirclePickerPreference"
+        android:summary="This is a double circle picker preference"
+        android:key="doublecircleicker"
+        app:minValue="1"
+        app:maxValue="3"
+        app:showValueInSummary="true"/>
+
+    <com.majeur.preferencekit.ColorPickerPreference
+        android:title="ColorPickerPreference"
+        android:summary="This is a color picker preference"
+        android:key="colorpicker"/>
+
+    <com.majeur.preferencekit.RadioPreference
+        android:title="RadioPreference"
+        android:summary="This is a radio preference"
+        android:key="radiobuttons"
+        app:entries="@array/radio_entries"
+        app:entryValues="@array/radio_entryValues"/>
+
+    <com.majeur.preferencekit.ExtraButtonsPreference
+        android:title="ExtraButtonsPreference"
+        android:summary="This is an exta button preference"
+        android:key="extrabuttons"
+        app:buttonLabels="@array/buttons" />
+
+
+
+</PreferenceScreen>

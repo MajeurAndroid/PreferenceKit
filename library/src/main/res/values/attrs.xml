@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="showValueInSummary" format="boolean" />
+    <attr name="maxValue" format="integer" />
+    <attr name="minValue" format="integer" />
+    <attr name="entries" format="reference" />
+    <attr name="entryValues" format="reference" />
+
+    <declare-styleable name="preference_base">
+        <attr name="locked" format="boolean" />
+        <attr name="lockedIcon" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="preference_seekbar">
+        <attr name="maxValue" />
+        <attr name="showValue" format="boolean" />
+        <attr name="knobColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="preference_numberpicker">
+        <attr name="maxValue" />
+        <attr name="minValue" />
+        <attr name="wrapSelectorWheel" format="boolean" />
+        <attr name="editableValue" format="boolean" />
+        <attr name="showValueInSummary" />
+    </declare-styleable>
+
+    <declare-styleable name="preference_circlepicker">
+        <attr name="maxValue" />
+        <attr name="minValue" />
+        <attr name="showValueInSummary" />
+    </declare-styleable>
+
+    <declare-styleable name="preference_spinner">
+        <attr name="entries" />
+        <attr name="entryValues" />
+    </declare-styleable>
+
+    <declare-styleable name="preference_colorpicker">
+        <attr name="alphaAllowed" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="preference_extrabuttons">
+        <attr name="buttonLabels" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="preference_radio">
+        <attr name="entries" />
+        <attr name="entryValues" />
+    </declare-styleable>
+</resources>
