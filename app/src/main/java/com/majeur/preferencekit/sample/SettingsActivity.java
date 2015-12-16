@@ -18,10 +18,12 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager()
-                .beginTransaction()
-                .add(android.R.id.content, new SettingsFragment())
-                .commit();
+
+        if (savedInstanceState == null)
+            getFragmentManager()
+                    .beginTransaction()
+                    .add(android.R.id.content, new SettingsFragment())
+                    .commit();
     }
 
     public static class SettingsFragment extends PreferenceFragment {

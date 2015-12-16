@@ -31,6 +31,14 @@
         <attr name="showValueInSummary" />
     </declare-styleable>
 
+    <declare-styleable name="preference_doublecirclepicker">
+        <attr name="maxValue1" format="integer"/>
+        <attr name="minValue1" format="integer" />
+        <attr name="maxValue2" format="integer"/>
+        <attr name="minValue2" format="integer" />
+        <attr name="showValueInSummary" />
+    </declare-styleable>
+
     <declare-styleable name="preference_spinner">
         <attr name="entries" />
         <attr name="entryValues" />

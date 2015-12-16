@@ -27,6 +27,8 @@ class CirclePickerView extends View {
     private Paint mPaint;
     private int mCircleRadius;
     private int mSelectionCircleRadius;
+    private int mDefaultCircleRadius;
+    private int mDefaultSelectionCircleRadius;
     private Paint mTextPaint;
     private int mSelectorColor, mWheelColor;
 
@@ -57,8 +59,8 @@ class CirclePickerView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mSelectorColor = Utils.COLOR_ACCENT;
         mWheelColor = Color.parseColor("#333333");
-        mCircleRadius = getResources().getDimensionPixelSize(R.dimen.circlepicker_radius);
-        mSelectionCircleRadius = Utils.dpToPx(context, 25);
+        mDefaultCircleRadius = getResources().getDimensionPixelSize(R.dimen.circlepicker_radius);
+        mDefaultSelectionCircleRadius = Utils.dpToPx(context, 25);
 
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(Color.WHITE);//Utils.getAttrColor(context, android.R.attr.textColor));
@@ -106,7 +108,7 @@ class CirclePickerView extends View {
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        int defaultSize = mCircleRadius * 2 + 2 * mSelectionCircleRadius;
+        int defaultSize = (mDefaultCircleRadius + mDefaultSelectionCircleRadius) * 2;
 
         if (widthMode == MeasureSpec.UNSPECIFIED) {
             widthSize = defaultSize + getPaddingLeft() + getPaddingRight();
@@ -129,6 +131,12 @@ class CirclePickerView extends View {
             // Do nothing
         }
 
+        int minSize = Math.min(widthSize - getPaddingLeft() - getPaddingRight(),
+                heightSize - getPaddingTop() - getPaddingBottom());
+
+        mCircleRadius = (int) ((0.75 * minSize) / 2);
+        mSelectionCircleRadius = (int) ((0.25 * minSize) / 2);
+
         setMeasuredDimension(widthSize, heightSize);
     }
 
@@ -146,7 +154,7 @@ class CirclePickerView extends View {
                         && touchRadius <= (mCircleRadius + mSelectionCircleRadius);
 
                 if (mIsOnWheel) {
-                    moveIndicatorTo(angle);
+                    animateIndicatorTo(angle);
                     return true;
                 }
                 return false;
@@ -162,6 +170,7 @@ class CirclePickerView extends View {
             case MotionEvent.ACTION_CANCEL:
                 if (mIsOnWheel) {
                     final int nearestElementIndex = calculateNearestElementIndex(angle);
+                    mIndicatorAnimator.cancel();
                     mIndicatorAnimator.setFloatValues(mIndicatorAngle, nearestElementIndex * mAngleStep);
                     mIndicatorAnimator.addListener(new AnimatorListener() {
                         @Override
@@ -199,6 +208,13 @@ class CirclePickerView extends View {
     private void moveIndicatorTo(float angle) {
         mIndicatorAngle = angle;
         invalidate();
+    }
+
+    private void animateIndicatorTo(float angle) {
+        mIndicatorAnimator.cancel();
+        mIndicatorAnimator.removeAllListeners();
+        mIndicatorAnimator.setFloatValues(mIndicatorAngle, angle);
+        mIndicatorAnimator.start();
     }
 
     @Override

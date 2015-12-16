@@ -44,15 +44,18 @@
         android:key="circleicker"
         android:defaultValue="2"
         app:minValue="1"
-        app:maxValue="3"
+        app:maxValue="5"
         app:showValueInSummary="true"/>
 
     <com.majeur.preferencekit.DoubleCirclePickerPreference
         android:title="DoubleCirclePickerPreference"
         android:summary="This is a double circle picker preference"
         android:key="doublecircleicker"
-        app:minValue="1"
-        app:maxValue="3"
+        app:minValue1="1"
+        app:maxValue1="5"
+        app:minValue2="1"
+        app:maxValue2="8"
+        android:defaultValue="3x6"
         app:showValueInSummary="true"/>
 
     <com.majeur.preferencekit.ColorPickerPreference
