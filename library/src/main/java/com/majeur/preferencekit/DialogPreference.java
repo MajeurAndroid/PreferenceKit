@@ -3,7 +3,6 @@ package com.majeur.preferencekit;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -11,86 +10,93 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class DialogPreference extends android.preference.DialogPreference {
+public class DialogPreference extends android.preference.DialogPreference implements CommonPreferenceDelegate.Delegatable, Lockable {
 
     private Context mContext;
     private AlertDialog mDialog;
 
-    private boolean mLocked;
-    private Drawable mLockedIconDrawable;
+    private CommonPreferenceDelegate mDelegate;
 
     public DialogPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        mContext = context;
+        mDelegate = new CommonPreferenceDelegate(this);
+        mDelegate.init(context, attrs);
     }
 
     public DialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+        this(context, attrs, 0);
     }
 
-    private void init(Context context, AttributeSet attrs) {
-        mContext = context;
-
-        if (attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_base, 0, 0);
-            mLocked = typedArray.getBoolean(R.styleable.preference_base_locked, false);
-            mLockedIconDrawable = typedArray.getDrawable(R.styleable.preference_base_lockedIcon);
-            typedArray.recycle();
-        }
-        setLocked(mLocked);
-
-        if (mLockedIconDrawable == null)
-            mLockedIconDrawable = getContext().getResources().getDrawable(R.drawable.lock24);
+    public DialogPreference(Context context) {
+        this(context, null);
     }
 
     @Override
     protected View onCreateView(ViewGroup parent) {
-        return LayoutInflater.from(getContext()).inflate(R.layout.preference_base, parent, false);
+        return mDelegate.onCreateView(parent);
     }
 
     @Override
     protected void onBindView(View view) {
-        super.onBindView(view);
-        ImageView imageView = (ImageView) view.findViewById(R.id.locked_icon);
-        imageView.setImageDrawable(mLocked ? mLockedIconDrawable : null);
-    }
-
-    public void setLockedIcon(Drawable drawable) {
-        mLockedIconDrawable = drawable;
-    }
-
-    public void setLockedIconResource(int resId) {
-        mLockedIconDrawable = getContext().getResources().getDrawable(resId);
-    }
-
-    public void setLocked(boolean locked) {
-        mLocked = locked;
-        super.setEnabled(!locked);
-        notifyChanged();
-    }
-
-    public boolean isLocked() {
-        return mLocked;
+        mDelegate.onBindView(view);
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        if (!mLocked)
-            super.setEnabled(enabled);
+    public void setLockedIcon(Drawable drawable) {
+        mDelegate.setLockedIcon(drawable);
+    }
+
+    @Override
+    public void setLockedIconResource(int resId) {
+        mDelegate.setLockedIconResource(resId);
+    }
+
+    @Override
+    public void setLocked(boolean locked) {
+        mDelegate.setLocked(locked);
+    }
+
+    @Override
+    public boolean isLocked() {
+        return mDelegate.isLocked();
+    }
+
+    @Override
+    public void superSetEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    @Override
+    public void superOnBindView(View view) {
+        super.onBindView(view);
+    }
+
+    @Override
+    public void notifyChangedInternal() {
+        notifyChanged();
     }
 
     @Override
     public Dialog getDialog() {
         return mDialog;
+    }
+
+    @Override
+    public CharSequence getPositiveButtonText() {
+        CharSequence superText = super.getPositiveButtonText();
+        return superText != null ? superText : getContext().getText(android.R.string.ok);
+    }
+
+    @Override
+    public CharSequence getNegativeButtonText() {
+        CharSequence superText = super.getNegativeButtonText();
+        return superText != null ? superText : getContext().getText(android.R.string.cancel);
     }
 
     @Override
@@ -117,7 +123,7 @@ public class DialogPreference extends android.preference.DialogPreference {
             TextView textView = new TextView(getContext(), null, R.style.TextAppearance_AppCompat);
             textView.setText(getDialogMessage());
             ScrollView scrollView = new ScrollView(getContext());
-            scrollView.addView(textView, new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            scrollView.addView(textView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
             builder.setView(scrollView);
         }
@@ -127,6 +133,7 @@ public class DialogPreference extends android.preference.DialogPreference {
         mDialog = builder.create();
         if (state != null)
             mDialog.onRestoreInstanceState(state);
+
         mDialog.show();
     }
 

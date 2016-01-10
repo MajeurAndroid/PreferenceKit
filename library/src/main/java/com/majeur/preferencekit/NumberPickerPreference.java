@@ -2,11 +2,10 @@ package com.majeur.preferencekit;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 
 /**
@@ -17,6 +16,7 @@ public class NumberPickerPreference extends DialogPreference {
     private int mMin;
     private int mMax;
     private int mValue;
+    private int mDividersColor;
 
     private boolean mWrapSelectorWheel, mEditableValue, mShowValueInSummary;
 
@@ -31,6 +31,7 @@ public class NumberPickerPreference extends DialogPreference {
         mWrapSelectorWheel = typedArray.getBoolean(R.styleable.preference_numberpicker_wrapSelectorWheel, false);
         mEditableValue = typedArray.getBoolean(R.styleable.preference_numberpicker_editableValue, false);
         mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
+        mDividersColor = typedArray.getColor(R.styleable.preference_numberpicker_selectionIndicatorsColor, Utils.COLOR_ACCENT);
         typedArray.recycle();
     }
 
@@ -64,6 +65,11 @@ public class NumberPickerPreference extends DialogPreference {
     @Override
     protected View onCreateDialogView() {
         mNumberPicker = new NumberPicker(getContext());
+
+        Drawable indicator = Utils.getDividerDrawable(mNumberPicker);
+        if (indicator != null)
+            indicator.setColorFilter(mDividersColor, PorterDuff.Mode.SRC_IN);
+
         return mNumberPicker;
     }
 

@@ -48,6 +48,7 @@ listened through OnExtraButtonClickListener interface, by using setOnExtraButton
  - name: "wrapSelectorWheel", type "boolean", defaultValue: "false", descr: Sets whether the selector wheel should wrap around the minValue and maxValue.
  - name: "editableValue", type "boolean", defaultValue: "false", descr: Sets if user can use SoftInput to set a value.
  - name: "showValueInSummary", type "boolean", defaultValue: "false", descr: If set, the value is shown as summary.
+ - name: "selectionIndicatorsColor", type "color", defaultValue: "#ff80cbc4", descr: Define NumberPicker's dividers color, ignored for devices lower than Jelly Bean (Api 16)..
  
  ## CirclePickerPreference
  This preference allow user to pickup an integer on a wheel of numbers. Obviously this is not design to work with a big amount of numbers.

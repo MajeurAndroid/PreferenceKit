@@ -23,6 +23,7 @@
         <attr name="wrapSelectorWheel" format="boolean" />
         <attr name="editableValue" format="boolean" />
         <attr name="showValueInSummary" />
+        <attr name="selectionIndicatorsColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="preference_circlepicker">

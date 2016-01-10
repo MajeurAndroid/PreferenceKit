@@ -24,12 +24,13 @@
     <com.majeur.preferencekit.NumberPickerPreference
         android:title="NumberPickerPreference"
         android:summary="Summary"
+        android:icon="@mipmap/ic_launcher"
         android:key="numberpicker"
         android:defaultValue="3"
         app:maxValue="15"
         app:minValue="2"
         app:showValueInSummary="true"
-        android:icon="@mipmap/ic_launcher"/>
+        app:selectionIndicatorsColor="#ff00e1"/>
 
     <com.majeur.preferencekit.SpinnerPreference
         android:title="SpinnerPreference"
