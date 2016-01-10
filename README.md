@@ -9,6 +9,20 @@ with a locked preference.
 Sample:
 [<img src="https://developer.android.com/images/brand/en_app_rgb_wo_60.png">](https://play.google.com/store/apps/details?id=com.majeur.preferencekit.sample)
 
+###Including this library in your project
+Put the binary file as follows:
+
+	yourModule/libs/PreferenceKit-1.1.aar
+Then in:
+
+	yourModule/build.gradle
+
+add following dependency:
+
+	dependencies {
+	    compile ':PreferenceKit-1.1@aar'
+	}
+
 ##Preference (Base)
 All preferences provided in this library extends this preference, so they all have these attributes, even if they are not re-precised for each preference
 #####Xml attributes
@@ -68,19 +82,19 @@ It has been designed to replace the ugly ICS number picker when choosing integer
   - **name**: "maxValue", **type** "int", defaultValue: "100", descr: Sets NumberPicker max value.
   - **name**: "minValue", **type** "int", defaultValue: "0", descr: Sets NumberPicker min value.
   - **name**: "showValueInSummary", **type** "boolean", defaultValue: "false", descr: If set, the value is shown as summary.
-
+  
 ##DoubleCirclePickerPreference
-Exactly the same as CirclePickerPreference but with two wheels.
+Exactly the same as CirclePickerPreference but with two wheels. 
 To access persisted data in your app, you need to use DoubleCirclePickerPreference.getValuesFromPersistedData().
 Example:
-
+        
         int defaultRow = c.getResources().getInteger(R.integer.home_row_count);
         int defaultCol = c.getResources().getInteger(R.integer.home_column_count);
-        String defaultValue = DoubleCirclePickerPreference.createDataToPersist(row, col);
-
+        String defaultValue = DoubleCirclePickerPreference.createPersistValue(row, col);
+        
         return DoubleCirclePickerPreference.getValuesFromPersistedData(preferences
                 .getString(Constants.PREF_GRID_ROW_COL_COUNT, defaultValue));
-
+            
 ##### Xml attributes
   - **name**: "maxValue1", **type** "int", defaultValue: "100", descr: Sets first NumberPicker max value.
   - **name**: "minValue1", **type** "int", defaultValue: "0", descr: Sets first NumberPicker min value.
