@@ -19,15 +19,26 @@ public class CirclePickerPreference extends DialogPreference {
 
     private CirclePickerView mNumberPicker;
 
-    public CirclePickerPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public CirclePickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_circlepicker, 0, 0);
-        mMax = typedArray.getInteger(R.styleable.preference_circlepicker_maxValue, 10);
-        mMin = typedArray.getInteger(R.styleable.preference_circlepicker_minValue, 1);
-        mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
-        typedArray.recycle();
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_circlepicker, defStyleAttr, 0);
+            mMax = typedArray.getInteger(R.styleable.preference_circlepicker_maxValue, 10);
+            mMin = typedArray.getInteger(R.styleable.preference_circlepicker_minValue, 1);
+            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
+            typedArray.recycle();
+        }
     }
+
+    public CirclePickerPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public CirclePickerPreference(Context context) {
+        this(context, null, 0);
+    }
+
 
     /**
      * Provide the default value to the system

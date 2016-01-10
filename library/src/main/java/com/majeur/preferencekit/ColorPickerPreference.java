@@ -24,13 +24,23 @@ public class ColorPickerPreference extends DialogPreference {
     private CircleColorIndicator mColorIndicator;
     private boolean mAlphaAllowed, mSVAllowed;
 
-    public ColorPickerPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public ColorPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_colorpicker, 0, 0);
-        mAlphaAllowed = typedArray.getBoolean(R.styleable.preference_colorpicker_alphaAllowed, true);
-        mSVAllowed = typedArray.getBoolean(R.styleable.preference_colorpicker_saturationAndValueAllowed, true);
-        typedArray.recycle();
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_colorpicker, defStyleAttr, 0);
+            mAlphaAllowed = typedArray.getBoolean(R.styleable.preference_colorpicker_alphaAllowed, true);
+            mSVAllowed = typedArray.getBoolean(R.styleable.preference_colorpicker_saturationAndValueAllowed, true);
+            typedArray.recycle();
+        }
+    }
+
+    public ColorPickerPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public ColorPickerPreference(Context context) {
+        this(context, null, 0);
     }
 
     public void setAlphaAllowed(boolean allowed) {

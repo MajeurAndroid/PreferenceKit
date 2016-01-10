@@ -22,17 +22,27 @@ public class NumberPickerPreference extends DialogPreference {
 
     private NumberPicker mNumberPicker;
 
-    public NumberPickerPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public NumberPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_numberpicker, 0, 0);
-        mMax = typedArray.getInteger(R.styleable.preference_numberpicker_maxValue, 100);
-        mMin = typedArray.getInteger(R.styleable.preference_numberpicker_minValue, 0);
-        mWrapSelectorWheel = typedArray.getBoolean(R.styleable.preference_numberpicker_wrapSelectorWheel, false);
-        mEditableValue = typedArray.getBoolean(R.styleable.preference_numberpicker_editableValue, false);
-        mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
-        mDividersColor = typedArray.getColor(R.styleable.preference_numberpicker_selectionIndicatorsColor, Utils.COLOR_ACCENT);
-        typedArray.recycle();
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_numberpicker, defStyleAttr, 0);
+            mMax = typedArray.getInteger(R.styleable.preference_numberpicker_maxValue, 100);
+            mMin = typedArray.getInteger(R.styleable.preference_numberpicker_minValue, 0);
+            mWrapSelectorWheel = typedArray.getBoolean(R.styleable.preference_numberpicker_wrapSelectorWheel, false);
+            mEditableValue = typedArray.getBoolean(R.styleable.preference_numberpicker_editableValue, false);
+            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
+            mDividersColor = typedArray.getColor(R.styleable.preference_numberpicker_selectionIndicatorsColor, Utils.COLOR_ACCENT);
+            typedArray.recycle();
+        }
+    }
+
+    public NumberPickerPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public NumberPickerPreference(Context context) {
+        this(context, null, 0);
     }
 
     /**

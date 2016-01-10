@@ -21,16 +21,26 @@ public class DoubleCirclePickerPreference extends DialogPreference {
 
     private CirclePickerView mNumberPicker1, mNumberPicker2;
 
-    public DoubleCirclePickerPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public DoubleCirclePickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_doublecirclepicker, 0, 0);
-        mMax1 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_maxValue1, 10);
-        mMin1 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_minValue1, 1);
-        mMax2 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_maxValue2, 10);
-        mMin2 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_minValue2, 1);
-        mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
-        typedArray.recycle();
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_doublecirclepicker, defStyleAttr, 0);
+            mMax1 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_maxValue1, 10);
+            mMin1 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_minValue1, 1);
+            mMax2 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_maxValue2, 10);
+            mMin2 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_minValue2, 1);
+            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
+            typedArray.recycle();
+        }
+    }
+
+    public DoubleCirclePickerPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public DoubleCirclePickerPreference(Context context) {
+        this(context, null, 0);
     }
 
     @Override
