@@ -31,7 +31,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.larswerkman.holocolorpicker.R;
+import com.majeur.preferencekit.R;
 
 public class ValueBar extends View {
 
