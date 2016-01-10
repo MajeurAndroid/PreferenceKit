@@ -3,12 +3,12 @@ package com.majeur.preferencekit;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.preference.Preference;
 
 /**
  * Class used to keep one piece of code when we extend multiple framework classes.

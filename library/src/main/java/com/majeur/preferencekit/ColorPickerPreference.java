@@ -3,8 +3,13 @@ package com.majeur.preferencekit;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.larswerkman.holocolorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.OpacityBar;
+import com.larswerkman.holocolorpicker.SVBar;
 
 /**
  * Preference that allow user to pick a color
@@ -13,15 +18,18 @@ public class ColorPickerPreference extends DialogPreference {
 
     private int DEFAULT_VALUE = Utils.COLOR_ACCENT;
     private int mValue;
-    private ColorPickerView mColorPickerView;
+
+    private ColorPicker mColorPickerView;
+
     private CircleView mColorIndicator;
-    private boolean mAlphaAllowed;
+    private boolean mAlphaAllowed, mSVAllowed;
 
     public ColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_colorpicker, 0, 0);
         mAlphaAllowed = typedArray.getBoolean(R.styleable.preference_colorpicker_alphaAllowed, true);
+        mSVAllowed = typedArray.getBoolean(R.styleable.preference_colorpicker_saturationAndValueAllowed, true);
         typedArray.recycle();
     }
 
@@ -34,7 +42,7 @@ public class ColorPickerPreference extends DialogPreference {
      */
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getInt(index, DEFAULT_VALUE);
+        return a.getColor(index, DEFAULT_VALUE);
     }
 
     @Override
@@ -58,19 +66,28 @@ public class ColorPickerPreference extends DialogPreference {
 
     @Override
     protected View onCreateDialogView() {
-        mColorPickerView = new ColorPickerView(getContext());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_colorpicker, null);
 
-        int p = Utils.dpToPx(getContext(), 20);
-        mColorPickerView.setPadding(p, p, p, p);
+        mColorPickerView = (ColorPicker) view.findViewById(R.id.colorPicker);
+        OpacityBar mOpacityBar = (OpacityBar) view.findViewById(R.id.opacityBar);
+        SVBar svBar = (SVBar) view.findViewById(R.id.svBar);
 
-        return mColorPickerView;
+        mOpacityBar.setColorPicker(mColorPickerView);
+        svBar.setColorPicker(mColorPickerView);
+
+        mColorPickerView.addOpacityBar(mOpacityBar);
+        mColorPickerView.addSVBar(svBar);
+
+        mOpacityBar.setVisibility(mAlphaAllowed ? View.VISIBLE : View.GONE);
+        svBar.setVisibility(mSVAllowed ? View.VISIBLE : View.GONE);
+
+        return view;
     }
 
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        ((ColorPickerView) view).setColor(mValue);
-        ((ColorPickerView) view).setAlphaAllowed(mAlphaAllowed);
+        mColorPickerView.setOldCenterColor(mValue);
     }
 
     @Override

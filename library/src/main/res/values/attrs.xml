@@ -47,6 +47,7 @@
 
     <declare-styleable name="preference_colorpicker">
         <attr name="alphaAllowed" format="boolean" />
+        <attr name="saturationAndValueAllowed" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="preference_extrabuttons">

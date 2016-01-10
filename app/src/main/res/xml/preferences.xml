@@ -30,7 +30,7 @@
         app:maxValue="15"
         app:minValue="2"
         app:showValueInSummary="true"
-        app:selectionIndicatorsColor="#ff00e1"/>
+        app:selectionIndicatorsColor="#ff80cbc4"/>
 
     <com.majeur.preferencekit.SpinnerPreference
         android:title="SpinnerPreference"
@@ -62,7 +62,10 @@
     <com.majeur.preferencekit.ColorPickerPreference
         android:title="ColorPickerPreference"
         android:summary="This is a color picker preference"
-        android:key="colorpicker"/>
+        android:key="colorpicker"
+        android:defaultValue="-8336444"
+        app:alphaAllowed="false"
+        app:saturationAndValueAllowed="true"/>
 
     <com.majeur.preferencekit.RadioPreference
         android:title="RadioPreference"
