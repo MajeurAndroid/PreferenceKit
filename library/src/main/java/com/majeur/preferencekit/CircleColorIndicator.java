@@ -10,21 +10,21 @@ import android.view.View;
 /**
  * View that shows a color in a circle with shadow
  */
-class CircleView extends View {
+class CircleColorIndicator extends View {
 
     private Paint mPaint, mShadowPaint;
 
-    public CircleView(Context context) {
+    public CircleColorIndicator(Context context) {
         super(context);
         init();
     }
 
-    public CircleView(Context context, AttributeSet attrs) {
+    public CircleColorIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircleColorIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

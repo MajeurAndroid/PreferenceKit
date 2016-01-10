@@ -37,7 +37,16 @@
         android:summary="This is a spinner preference"
         android:key="spinner"
         app:entries="@array/entries"
-        app:entryValues="@array/entryValues"/>
+        app:entryValues="@array/entryValues"
+        app:showValueInSummary="true"/>
+
+    <com.majeur.preferencekit.RadioPreference
+        android:title="RadioPreference"
+        android:summary="This is a radio preference"
+        android:key="radiobuttons"
+        app:entries="@array/radio_entries"
+        app:entryValues="@array/radio_entryValues"
+        app:showValueInSummary="true"/>
 
     <com.majeur.preferencekit.CirclePickerPreference
         android:title="CirclePickerPreference"
@@ -66,13 +75,6 @@
         android:defaultValue="-8336444"
         app:alphaAllowed="false"
         app:saturationAndValueAllowed="true"/>
-
-    <com.majeur.preferencekit.RadioPreference
-        android:title="RadioPreference"
-        android:summary="This is a radio preference"
-        android:key="radiobuttons"
-        app:entries="@array/radio_entries"
-        app:entryValues="@array/radio_entryValues"/>
 
     <com.majeur.preferencekit.ExtraButtonsPreference
         android:title="ExtraButtonsPreference"

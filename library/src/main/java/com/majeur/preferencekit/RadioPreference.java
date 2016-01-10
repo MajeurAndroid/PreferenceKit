@@ -15,16 +15,8 @@ import java.util.Arrays;
 /**
  * Preference that shows multiple single choice items in form of radio buttons.
  */
-public class RadioPreference extends Preference {
+public class RadioPreference extends EntrySetPreference {
 
-    /**
-     * @see SpinnerPreference Same implementation
-     */
-    private static final String STRING_DEFAULT = "str_default_none";
-
-    private CharSequence[] mEntries;
-    private CharSequence[] mEntryValues;
-    private CharSequence mValue;
     private RadioGroup mContainer;
     private LayoutInflater mInflater;
 
@@ -44,78 +36,18 @@ public class RadioPreference extends Preference {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        if (attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_radio, 0, 0);
-            mEntries = typedArray.getTextArray(R.styleable.preference_radio_entries);
-            mEntryValues = typedArray.getTextArray(R.styleable.preference_radio_entryValues);
-            typedArray.recycle();
-        }
-
         mInflater = LayoutInflater.from(context);
     }
 
-    /**
-     * Set manually arrays resources. They both must contains elements.
-     *
-     * @param entriesResId     Resource Id of Entries
-     * @param entryValuesResId Resource Id of EntryValues
-     */
-    public void setEntryResourceIds(int entriesResId, int entryValuesResId) {
-        Resources resources = getContext().getResources();
-        mEntries = resources.getTextArray(entriesResId);
-        mEntryValues = resources.getTextArray(entryValuesResId);
-
-        if (Utils.isArrayEmpty(mEntries) || Utils.isArrayEmpty(mEntryValues))
-            throw new IllegalStateException("entries and entryValues must be set, and must have at least one item.");
-
-        setRadioButtons();
-        setNewValue(mEntryValues[0].toString());
-    }
-
-    /**
-     * @see SpinnerPreference Same implementation of {@link #STRING_DEFAULT}
-     */
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-        String value = a.getString(index);
-        return (value == null) ? STRING_DEFAULT : value;
-    }
+    protected void onSetNewValue(CharSequence newValue) {
+        CharSequence[] entryValues = getEntryValues();
 
-    /**
-     * @see SpinnerPreference Same implementation of {@link #STRING_DEFAULT}
-     */
-    @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        if (Utils.isArrayEmpty(mEntries) || Utils.isArrayEmpty(mEntryValues))
-            throw new IllegalStateException("entries and entryValues must be set.");
-
-        if (STRING_DEFAULT.equals(defaultValue))
-            defaultValue = mEntryValues[0].toString();
-
-        String value = restorePersistedValue ? getPersistedString(mEntryValues[0].toString()) : (String) defaultValue;
-        setNewValue(value);
-    }
-
-    /**
-     * Called to commit value change
-     *
-     * @param newValue New value
-     */
-    private void setNewValue(String newValue) {
-
-        if (isPersistent())
-            persistString(newValue);
-
-        if (getOnPreferenceChangeListener() != null)
-            getOnPreferenceChangeListener().onPreferenceChange(this, newValue);
-
-        final int newPosition = Arrays.asList(mEntryValues).indexOf(newValue);
+        final int newPosition = Arrays.asList(entryValues).indexOf(newValue);
         int radioId = intToRadioId(newPosition);
 
         if (mContainer != null && mContainer.getCheckedRadioButtonId() != radioId)
             mContainer.check(radioId);
-
-        mValue = newValue;
     }
 
     @Override
@@ -126,6 +58,7 @@ public class RadioPreference extends Preference {
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
+        final CharSequence[] entryValues = getEntryValues();
 
         mContainer = (RadioGroup) view.findViewById(R.id.radio_group);
         setRadioButtons();
@@ -133,27 +66,31 @@ public class RadioPreference extends Preference {
         mContainer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
-                String newValue = mEntryValues[radioIdToInt(id)].toString();
-                setNewValue(newValue);
+                String newValue = entryValues[radioIdToInt(id)].toString();
+                setValue(newValue);
             }
         });
     }
 
     private void setRadioButtons() {
         if (mContainer != null) {
+            CharSequence[] entries = getEntries();
+            final CharSequence[] entryValues = getEntryValues();
+            CharSequence value = getValue();
+
             mContainer.removeAllViews();
 
-            for (int i = 0; i < mEntries.length; i++) {
+            for (int i = 0; i < entries.length; i++) {
                 final int id = intToRadioId(i);
 
                 RadioButton button = (RadioButton) mInflater.inflate(R.layout.simple_radio_button, mContainer, false);
-                button.setText(mEntries[i]);
+                button.setText(entries[i]);
                 button.setEnabled(isEnabled());
                 button.setId(id); // Needed for the RadioGroup
 
                 mContainer.addView(button);
 
-                if (mEntryValues[i].equals(mValue))
+                if (entryValues[i].equals(value))
                     mContainer.check(id);
             }
         }

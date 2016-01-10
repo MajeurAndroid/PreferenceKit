@@ -21,7 +21,7 @@ public class ColorPickerPreference extends DialogPreference {
 
     private ColorPicker mColorPickerView;
 
-    private CircleView mColorIndicator;
+    private CircleColorIndicator mColorIndicator;
     private boolean mAlphaAllowed, mSVAllowed;
 
     public ColorPickerPreference(Context context, AttributeSet attrs) {
@@ -99,7 +99,7 @@ public class ColorPickerPreference extends DialogPreference {
     @Override
     protected View onCreateView(ViewGroup parent) {
         View view = super.onCreateView(parent);
-        mColorIndicator = new CircleView(getContext());
+        mColorIndicator = new CircleColorIndicator(getContext());
 
         ViewGroup stub = (ViewGroup) view.findViewById(R.id.stub);
         int px = Utils.dpToPx(getContext(), 40);
