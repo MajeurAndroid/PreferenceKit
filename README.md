@@ -76,7 +76,7 @@ Example:
 
         int defaultRow = c.getResources().getInteger(R.integer.home_row_count);
         int defaultCol = c.getResources().getInteger(R.integer.home_column_count);
-        String defaultValue = DoubleCirclePickerPreference.createPersistValue(row, col);
+        String defaultValue = DoubleCirclePickerPreference.createDataToPersist(row, col);
 
         return DoubleCirclePickerPreference.getValuesFromPersistedData(preferences
                 .getString(Constants.PREF_GRID_ROW_COL_COUNT, defaultValue));
