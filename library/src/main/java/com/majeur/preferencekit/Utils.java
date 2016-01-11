@@ -64,6 +64,16 @@ final class Utils {
                 context.getResources().getDisplayMetrics());
     }
 
+    public static Drawable[] getDrawableArray(Context context, int arrayResId) {
+        TypedArray typedArray = context.getResources().obtainTypedArray(arrayResId);
+        int length = typedArray.length();
+        Drawable[] array = new Drawable[length];
+        for (int i = 0; i < length; i++)
+            array[i] = typedArray.getDrawable(i);
+        typedArray.recycle();
+        return array;
+    }
+
     public static int getAttrColor(Context context, int resAttrId) {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(new int[]{resAttrId});
         int color = typedArray.getColor(0, 0);

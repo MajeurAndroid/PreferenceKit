@@ -61,4 +61,16 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <string-array name="radiogroup_titles">
+        <item>Child radio 1</item>
+        <item>Child radio 2</item>
+        <item>Child radio 3</item>
+    </string-array>
+
+    <string-array name="radiogroup_sums">
+        <item>Radio summary 1</item>
+        <item>Radio summary 2</item>
+        <item>Radio summary 3</item>
+    </string-array>
 </resources>

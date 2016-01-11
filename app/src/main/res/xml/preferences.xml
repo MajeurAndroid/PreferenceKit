@@ -72,6 +72,12 @@
         app:maxValue="5"
         app:showValueInSummary="true"/>
 
+    <CheckBoxPreference
+        android:title="CirclePickerPreference"
+        android:summary="This is a circle picker preference"
+        android:key="chk"
+        android:defaultValue="false"/>
+
     <com.majeur.preferencekit.DoubleCirclePickerPreference
         android:title="DoubleCirclePickerPreference"
         android:summary="This is a double circle picker preference"
@@ -97,6 +103,10 @@
         android:key="extrabuttons"
         app:buttonLabels="@array/buttons" />
 
-
+    <com.majeur.preferencekit.RadioPreferenceGroup
+        android:title="radios"
+        app:radioTitles="@array/radiogroup_titles"
+        app:radioSummaries="@array/radiogroup_sums"
+        app:radioIcons="@array/radiogroup_icons"/>
 
 </PreferenceScreen>

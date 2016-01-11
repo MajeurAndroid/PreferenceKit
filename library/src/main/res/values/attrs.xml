@@ -76,6 +76,13 @@
         <attr name="entryValues" />
     </declare-styleable>
 
+    <declare-styleable name="preference_radiogroup" >
+        <attr name="radioTitles" format="reference" />
+        <attr name="radioSummaries" format="reference" />
+        <attr name="radioIcons" format="reference" />
+        <attr name="titleColor" format="color" />
+    </declare-styleable>
+
 <!-- ColorPicker lib -->
     <declare-styleable name="ColorPicker">
         <attr name="color_wheel_radius" format="dimension" />
@@ -85,6 +92,7 @@
         <attr name="color_pointer_radius" format="dimension" />
         <attr name="color_pointer_halo_radius" format="dimension" />
     </declare-styleable>
+
     <declare-styleable name="ColorBars">
         <attr name="bar_thickness" format="dimension" />
         <attr name="bar_length" format="dimension" />
