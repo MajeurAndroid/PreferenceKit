@@ -71,6 +71,6 @@
     <string-array name="radiogroup_sums">
         <item>Radio summary 1</item>
         <item>Radio summary 2</item>
-        <item>Radio summary 3</item>
+        <item>@null</item>
     </string-array>
 </resources>

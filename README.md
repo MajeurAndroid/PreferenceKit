@@ -6,8 +6,9 @@ and an icon will be displayed in the top end corner showing a padlock. A custom 
 setLockedIcon(Drawable), setLockedIconResource(int) or via xml attribute "lockedIcon". The user will not be able to interact
 with a locked preference.
 
-Sample:
-[<img src="https://developer.android.com/images/brand/en_app_rgb_wo_60.png">](https://play.google.com/store/apps/details?id=com.majeur.preferencekit.sample)
+####See:
+ - [**Sample application**](https://play.google.com/store/apps/details?id=com.majeur.preferencekit.sample)
+ - [**Java documentation**](http://majeurandroid.github.io/PreferenceKit/index.html)
 
 ###Including this library in your project
 Put the binary file as follows:
@@ -99,8 +100,18 @@ Example:
   - **name**: "maxValue1", **type** "int", defaultValue: "100", descr: Sets first NumberPicker max value.
   - **name**: "minValue1", **type** "int", defaultValue: "0", descr: Sets first NumberPicker min value.
   - **name**: "maxValue2", **type** "int", defaultValue: "100", descr: Sets second NumberPicker max value.
-  - **name**: "minValue3", **type** "int", defaultValue: "0", descr: Sets second NumberPicker min value.
+  - **name**: "minValue2", **type** "int", defaultValue: "0", descr: Sets second NumberPicker min value.
   - **name**: "showValueInSummary", **type** "boolean", defaultValue: "false", descr: If set, the value is shown as summary.
+  
+##RadioPreferenceGroup
+Group of radio based preferences, only single radio preference is checkable in group. It is the same idea as RadioGroup class, but for preferences.
+Persisted value is the index of checked radio preference.
+![alt tag](https://raw.githubusercontent.com/MajeurAndroid/PreferenceKit/master/web_res/RadioGroup.png)
+##### Xml attributes
+ - **name**: "titleColor", **type** "color", descr: group title color.
+ - **name**: "radioTitles", **type** "string-array", descr: child titles, must be set.
+ - **name**: "radioSummaries", **type** "string-array", descr: child summaries, optional, can contains null elements.
+ - **name**: "radioIcons", **type** "array", descr: child icons, optional, can contains null elements.
 
 ##License
 

@@ -19,6 +19,6 @@
     <array name="radiogroup_icons">
         <item>@mipmap/ic_launcher</item>
         <item>@null</item>
-        <item>@mipmap/ic_launcher</item>
+        <item>@null</item>
     </array>
 </resources>
