@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/pdroid/AndroidStudioProjects/PreferenceKitSample/library/src/main/res/values/attrs.xml -->
+    <eat-comment/>
+    <attr format="reference" name="entries"/>
+    <attr format="reference" name="entryValues"/>
+    <attr format="integer" name="maxValue"/>
+    <attr format="integer" name="minValue"/>
+    <attr format="boolean" name="showValueInSummary"/>
+    <declare-styleable name="ColorBars"><attr format="dimension" name="bar_thickness"/><attr format="dimension" name="bar_length"/><attr format="dimension" name="bar_pointer_radius"/><attr format="dimension" name="bar_pointer_halo_radius"/><attr format="boolean" name="bar_orientation_horizontal"/></declare-styleable>
+    <declare-styleable name="ColorPicker"><attr format="dimension" name="color_wheel_radius"/><attr format="dimension" name="color_wheel_thickness"/><attr format="dimension" name="color_center_radius"/><attr format="dimension" name="color_center_halo_radius"/><attr format="dimension" name="color_pointer_radius"/><attr format="dimension" name="color_pointer_halo_radius"/></declare-styleable>
+    <declare-styleable name="preference_base"><attr format="boolean" name="locked"/><attr format="reference" name="lockedIcon"/></declare-styleable>
+    <declare-styleable name="preference_circlepicker"><attr name="maxValue"/><attr name="minValue"/><attr name="showValueInSummary"/></declare-styleable>
+    <declare-styleable name="preference_colorpicker"><attr format="boolean" name="alphaAllowed"/><attr format="boolean" name="saturationAndValueAllowed"/></declare-styleable>
+    <declare-styleable name="preference_doublecirclepicker"><attr format="integer" name="maxValue1"/><attr format="integer" name="minValue1"/><attr format="integer" name="maxValue2"/><attr format="integer" name="minValue2"/><attr name="showValueInSummary"/></declare-styleable>
+    <declare-styleable name="preference_entryset"><attr name="entries"/><attr name="entryValues"/><attr name="showValueInSummary"/></declare-styleable>
+    <declare-styleable name="preference_extrabuttons"><attr format="reference" name="buttonLabels"/></declare-styleable>
+    <declare-styleable name="preference_numberpicker"><attr name="maxValue"/><attr name="minValue"/><attr format="boolean" name="wrapSelectorWheel"/><attr format="boolean" name="editableValue"/><attr name="showValueInSummary"/><attr format="color" name="selectionIndicatorsColor"/></declare-styleable>
+    <declare-styleable name="preference_radio"><attr name="entries"/><attr name="entryValues"/></declare-styleable>
+    <declare-styleable name="preference_radiogroup"><attr format="reference" name="radioTitles"/><attr format="reference" name="radioSummaries"/><attr format="reference" name="radioIcons"/><attr format="color" name="titleColor"/></declare-styleable>
+    <declare-styleable name="preference_seekbar"><attr name="maxValue"/><attr format="boolean" name="showValue"/><attr format="color" name="knobColor"/></declare-styleable>
+    <!-- From: file:/home/pdroid/AndroidStudioProjects/PreferenceKitSample/library/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="bar_length">240dp</dimen>
+    <dimen name="bar_pointer_halo_radius">14dp</dimen>
+    <dimen name="bar_pointer_radius">6dp</dimen>
+    <dimen name="bar_thickness">4dp</dimen>
+    <dimen name="circlepicker_radius">70dp</dimen>
+    <dimen name="color_center_halo_radius">60dp</dimen>
+    <dimen name="color_center_radius">54dp</dimen>
+    <dimen name="color_pointer_halo_radius">18dp</dimen>
+    <dimen name="color_pointer_radius">14dp</dimen>
+    <dimen name="color_wheel_radius">124dp</dimen>
+    <dimen name="color_wheel_thickness">8dp</dimen>
+    <dimen name="default_widgets_side_margins">10dp</dimen>
+    <!-- From: file:/home/pdroid/AndroidStudioProjects/PreferenceKitSample/library/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">Preference Kit</string>
+</resources>
