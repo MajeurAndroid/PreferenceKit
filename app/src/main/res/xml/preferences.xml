@@ -105,6 +105,7 @@
 
     <com.majeur.preferencekit.RadioPreferenceGroup
         android:title="radios"
+        android:key="radiogroup"
         app:radioTitles="@array/radiogroup_titles"
         app:radioSummaries="@array/radiogroup_sums"
         app:radioIcons="@array/radiogroup_icons"/>

@@ -30,6 +30,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+/**
+ * @hide
+ */
 final class Utils {
 
     public static final int COLOR_ACCENT = Color.parseColor("#ff80cbc4");

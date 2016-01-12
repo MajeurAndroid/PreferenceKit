@@ -112,16 +112,9 @@ public class RadioPreferenceGroup extends PreferenceGroup {
         }
     }
 
-    @Override
-    protected void onAttachedToActivity() {
-        super.onAttachedToActivity();
-        if (mRadioTitles == null || mRadioTitles.length == 0)
-            return;
-
-        syncChildren();
-    }
-
     private void syncChildren() {
+        removeAll();
+
         for (int i = 0; i < mRadioTitles.length; i++) {
             InternalRadioPreference preference = new InternalRadioPreference(getContext());
 
@@ -148,6 +141,7 @@ public class RadioPreferenceGroup extends PreferenceGroup {
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+        syncChildren();
         setCheckedRadio(restorePersistedValue ? getPersistedInt(0) : (Integer) defaultValue);
     }
 
@@ -219,11 +213,17 @@ public class RadioPreferenceGroup extends PreferenceGroup {
         return true;
     }
 
+    /**
+     * @hide
+     */
     @Override
     public boolean isSelectable() {
         return false;
     }
 
+    /**
+     * @hide
+     */
     private interface OnChildRadioCheckedListener {
         void onChildRadioChecked(InternalRadioPreference preference, boolean checked);
     }
@@ -248,7 +248,6 @@ public class RadioPreferenceGroup extends PreferenceGroup {
             stub.removeAllViews(); // CheckBox has been added in super call
             LayoutInflater.from(getContext()).inflate(R.layout.widget_radio, stub, true);
 
-            view.setPadding(Utils.dpToPx(getContext(), 20), 0, 0, 0);
             return view;
         }
 
