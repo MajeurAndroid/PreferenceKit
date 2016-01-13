@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright 2016 MajeurAndroid
   ~
   ~  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,31 +17,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:layout_marginLeft="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginStart="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginRight="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginEnd="@dimen/pk_default_widgets_side_margins"
+    android:gravity="center">
 
-    <include layout="@layout/preference_base" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <SeekBar
+        android:id="@+id/pk_seekbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/default_widgets_side_margins"
-        android:layout_marginStart="@dimen/default_widgets_side_margins"
-        android:layout_marginRight="@dimen/default_widgets_side_margins"
-        android:layout_marginEnd="@dimen/default_widgets_side_margins"
-        android:gravity="center">
+        android:layout_weight="1" />
 
-        <SeekBar
-            android:id="@+id/seekbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <TextView android:id="@+id/indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="32"/>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/pk_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="32" />
 
 </LinearLayout>

@@ -49,8 +49,8 @@ public class CheckBoxPreference extends android.preference.CheckBoxPreference im
     protected View onCreateView(ViewGroup parent) {
         View view = mDelegate.onCreateView(parent);
 
-        ViewGroup stub = (ViewGroup) view.findViewById(R.id.stub);
-        LayoutInflater.from(getContext()).inflate(R.layout.widget_checkbox, stub, true);
+        ViewGroup stub = (ViewGroup) view.findViewById(R.id.pk_stub);
+        LayoutInflater.from(getContext()).inflate(R.layout.widget_checkbox, stub);
 
         return view;
     }

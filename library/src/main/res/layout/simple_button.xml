@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright 2016 MajeurAndroid
   ~
   ~  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,4 +17,4 @@
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:selectableItemBackground"/>
+    android:background="?android:selectableItemBackground" />

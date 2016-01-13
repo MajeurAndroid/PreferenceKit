@@ -66,7 +66,12 @@ public class RadioPreference extends EntrySetPreference {
 
     @Override
     protected View onCreateView(ViewGroup parent) {
-        return mInflater.inflate(R.layout.preference_radio, parent, false);
+        View view = super.onCreateView(parent);
+
+        ViewGroup container = (ViewGroup) view.findViewById(R.id.pk_bottom_container);
+        mInflater.inflate(R.layout.preference_radio, container);
+
+        return view;
     }
 
     @Override
@@ -74,7 +79,7 @@ public class RadioPreference extends EntrySetPreference {
         super.onBindView(view);
         final CharSequence[] entryValues = getEntryValues();
 
-        mContainer = (RadioGroup) view.findViewById(R.id.radio_group);
+        mContainer = (RadioGroup) view.findViewById(R.id.pk_radio_group);
         setRadioButtons();
 
         mContainer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

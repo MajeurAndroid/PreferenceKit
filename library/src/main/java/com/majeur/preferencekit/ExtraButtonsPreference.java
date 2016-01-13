@@ -93,13 +93,18 @@ public class ExtraButtonsPreference extends Preference {
 
     @Override
     protected View onCreateView(ViewGroup parent) {
-        return mInflater.inflate(R.layout.preference_extrabuttons, parent, false);
+        View view = super.onCreateView(parent);
+
+        ViewGroup container = (ViewGroup) view.findViewById(R.id.pk_bottom_container);
+        mInflater.inflate(R.layout.preference_extrabuttons, container);
+
+        return view;
     }
 
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        mContainer = (LinearLayout) view.findViewById(R.id.extra_container);
+        mContainer = (LinearLayout) view.findViewById(R.id.pk_extra_container);
         setButtons();
     }
 

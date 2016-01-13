@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright 2016 MajeurAndroid
   ~
   ~  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,19 +14,11 @@
   ~  limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pk_spinner"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <include layout="@layout/preference_base" />
-
-    <Spinner android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="@dimen/default_widgets_side_margins"
-        android:layout_marginStart="@dimen/default_widgets_side_margins"
-        android:layout_marginRight="@dimen/default_widgets_side_margins"
-        android:layout_marginEnd="@dimen/default_widgets_side_margins"/>
-
-</LinearLayout>
+    android:layout_height="40dp"
+    android:layout_marginLeft="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginStart="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginRight="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginEnd="@dimen/pk_default_widgets_side_margins" />

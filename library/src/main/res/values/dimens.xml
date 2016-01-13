@@ -16,8 +16,13 @@
   -->
 
 <resources>
-    <dimen name="default_widgets_side_margins">10dp</dimen>
-    <dimen name="circlepicker_radius">70dp</dimen>
+    <dimen name="pk_default_widgets_side_margins">10dp</dimen>
+    <dimen name="pk_circlepicker_radius">70dp</dimen>
+
+    <dimen name="pk_preference_header_icon_horizontal_padding">20dp</dimen>
+    <dimen name="pk_preference_header_activity_horizontal_padding">0dp</dimen>
+
+    <dimen name="pk_preference_horizontal_padding">20dp</dimen>
 
 <!-- ColorPicker lib -->
     <!-- Standart dimens for the color wheel -->

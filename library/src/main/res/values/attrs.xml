@@ -82,6 +82,16 @@
         <attr name="radioIcons" format="reference" />
         <attr name="titleColor" format="color" />
     </declare-styleable>
+    
+    <!-- Header activity -->
+    <declare-styleable name="PreferenceHeader" >
+        <attr name="id" format="reference" />
+        <attr name="title" />
+        <attr name="summary" format="string" />
+        <attr name="fragment" format="string" />
+        <attr name="icon" />
+        <attr name="tintIcon" format="boolean" />
+    </declare-styleable>
 
 <!-- ColorPicker lib -->
     <declare-styleable name="ColorPicker">

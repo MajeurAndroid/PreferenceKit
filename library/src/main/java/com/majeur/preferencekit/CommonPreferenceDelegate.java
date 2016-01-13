@@ -64,7 +64,7 @@ class CommonPreferenceDelegate implements Lockable {
 
     public void onBindView(View view) {
         ((Delegatable) mPreference).superOnBindView(view);
-        ImageView imageView = (ImageView) view.findViewById(R.id.locked_icon);
+        ImageView imageView = (ImageView) view.findViewById(R.id.pk_locked_icon);
         imageView.setImageDrawable(mLocked ? mLockedIconDrawable : null);
     }
 

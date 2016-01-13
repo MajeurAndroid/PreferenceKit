@@ -15,14 +15,18 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pk_window_light"
+    android:paddingLeft="@dimen/pk_preference_header_activity_horizontal_padding"
+    android:paddingStart="@dimen/pk_preference_header_activity_horizontal_padding"
+    android:paddingRight="@dimen/pk_preference_header_activity_horizontal_padding"
+    android:paddingEnd="@dimen/pk_preference_header_activity_horizontal_padding">
 
-    <com.majeur.preferencekit.CirclePickerView
-        android:id="@+id/pk_circlePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_gravity="center" />
+    <FrameLayout
+        android:id="@+id/pk_fragments_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" />
 
 </FrameLayout>

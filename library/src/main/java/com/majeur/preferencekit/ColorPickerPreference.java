@@ -32,7 +32,7 @@ import com.larswerkman.holocolorpicker.SVBar;
  */
 public class ColorPickerPreference extends DialogPreference {
 
-    private int DEFAULT_VALUE = Utils.COLOR_ACCENT;
+    private int mDefaultValue;
     private int mValue;
 
     private ColorPicker mColorPickerView;
@@ -49,6 +49,8 @@ public class ColorPickerPreference extends DialogPreference {
             mSVAllowed = typedArray.getBoolean(R.styleable.preference_colorpicker_saturationAndValueAllowed, true);
             typedArray.recycle();
         }
+
+        mDefaultValue = Utils.getAttrColor(context, R.attr.colorAccent);
     }
 
     public ColorPickerPreference(Context context, AttributeSet attrs) {
@@ -68,12 +70,12 @@ public class ColorPickerPreference extends DialogPreference {
      */
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getColor(index, DEFAULT_VALUE);
+        return a.getColor(index, mDefaultValue);
     }
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        int value = restorePersistedValue ? getPersistedInt(DEFAULT_VALUE) : (Integer) defaultValue;
+        int value = restorePersistedValue ? getPersistedInt(mDefaultValue) : (Integer) defaultValue;
         setNewValue(value);
     }
 
@@ -94,9 +96,9 @@ public class ColorPickerPreference extends DialogPreference {
     protected View onCreateDialogView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_colorpicker, null);
 
-        mColorPickerView = (ColorPicker) view.findViewById(R.id.colorPicker);
-        OpacityBar mOpacityBar = (OpacityBar) view.findViewById(R.id.opacityBar);
-        SVBar svBar = (SVBar) view.findViewById(R.id.svBar);
+        mColorPickerView = (ColorPicker) view.findViewById(R.id.pk_colorPicker);
+        OpacityBar mOpacityBar = (OpacityBar) view.findViewById(R.id.pk_opacityBar);
+        SVBar svBar = (SVBar) view.findViewById(R.id.pk_svBar);
 
         mOpacityBar.setColorPicker(mColorPickerView);
         svBar.setColorPicker(mColorPickerView);
@@ -127,7 +129,7 @@ public class ColorPickerPreference extends DialogPreference {
         View view = super.onCreateView(parent);
         mColorIndicator = new CircleColorIndicator(getContext());
 
-        ViewGroup stub = (ViewGroup) view.findViewById(R.id.stub);
+        ViewGroup stub = (ViewGroup) view.findViewById(R.id.pk_stub);
         int px = Utils.dpToPx(getContext(), 40);
         stub.addView(mColorIndicator, new ViewGroup.LayoutParams(px, px));
         return view;

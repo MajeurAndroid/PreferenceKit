@@ -48,7 +48,8 @@ public class NumberPickerPreference extends DialogPreference {
             mWrapSelectorWheel = typedArray.getBoolean(R.styleable.preference_numberpicker_wrapSelectorWheel, false);
             mEditableValue = typedArray.getBoolean(R.styleable.preference_numberpicker_editableValue, false);
             mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
-            mDividersColor = typedArray.getColor(R.styleable.preference_numberpicker_selectionIndicatorsColor, Utils.COLOR_ACCENT);
+            mDividersColor = typedArray.getColor(R.styleable.preference_numberpicker_selectionIndicatorsColor,
+                    Utils.getAttrColor(context, R.attr.colorAccent));
             typedArray.recycle();
         }
     }

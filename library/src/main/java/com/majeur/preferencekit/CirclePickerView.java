@@ -72,13 +72,13 @@ class CirclePickerView extends View {
 
     private void init(Context context) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mSelectorColor = Utils.COLOR_ACCENT;
-        mWheelColor = Color.parseColor("#333333");
-        mDefaultCircleRadius = getResources().getDimensionPixelSize(R.dimen.circlepicker_radius);
+        mSelectorColor = Utils.getAttrColor(getContext(), R.attr.colorAccent);
+        mWheelColor = getResources().getColor(R.color.pk_window_light);
+        mDefaultCircleRadius = getResources().getDimensionPixelSize(R.dimen.pk_circlepicker_radius);
         mDefaultSelectionCircleRadius = Utils.dpToPx(context, 25);
 
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setColor(Color.WHITE);//Utils.getAttrColor(context, android.R.attr.textColor));
+        mTextPaint.setColor(Color.BLACK);//Utils.getAttrColor(context, android.R.attr.textColor));
         mTextPaint.setTextSize(Utils.spToPx(context, 18));//Utils.getAttrDimen(context, android.R.attr.textSize));
 
         mIndicatorAnimator = new ValueAnimator();

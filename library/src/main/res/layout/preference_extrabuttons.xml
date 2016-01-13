@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright 2016 MajeurAndroid
   ~
   ~  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,25 +15,17 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pk_extra_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <include layout="@layout/preference_base" />
-
-    <LinearLayout android:id="@+id/extra_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/default_widgets_side_margins"
-        android:layout_marginStart="@dimen/default_widgets_side_margins"
-        android:layout_marginRight="@dimen/default_widgets_side_margins"
-        android:layout_marginEnd="@dimen/default_widgets_side_margins"
-        android:gravity="center"
-        android:showDividers="middle"
-        android:divider="?android:listDivider"
-        android:dividerPadding="4dp">
-
-    </LinearLayout>
+    android:orientation="horizontal"
+    android:layout_marginLeft="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginStart="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginRight="@dimen/pk_default_widgets_side_margins"
+    android:layout_marginEnd="@dimen/pk_default_widgets_side_margins"
+    android:gravity="center"
+    android:showDividers="middle"
+    android:divider="?android:listDivider"
+    android:dividerPadding="4dp">
 
 </LinearLayout>

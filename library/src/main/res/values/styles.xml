@@ -17,4 +17,12 @@
 
 <resources>
 
+    <style name="TextAppearance.PreferenceKit.Title" parent="TextAppearance.AppCompat.Title" >
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.PreferenceKit.Summary" parent="TextAppearance.AppCompat.Subhead" >
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright 2016 MajeurAndroid
   ~
   ~  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,4 +19,4 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:gravity="center"
-    android:minHeight="40dp"/>
+    android:minHeight="40dp" />

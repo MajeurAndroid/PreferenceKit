@@ -244,7 +244,7 @@ public class RadioPreferenceGroup extends PreferenceGroup {
         protected View onCreateView(ViewGroup parent) {
             View view = super.onCreateView(parent);
 
-            ViewGroup stub = (ViewGroup) view.findViewById(R.id.stub);
+            ViewGroup stub = (ViewGroup) view.findViewById(R.id.pk_stub);
             stub.removeAllViews(); // CheckBox has been added in super call
             LayoutInflater.from(getContext()).inflate(R.layout.widget_radio, stub, true);
 

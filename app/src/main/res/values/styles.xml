@@ -17,10 +17,8 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">#607D8B</item>
-        <item name="colorPrimaryDark">#37474F</item>
-        <item name="colorAccent">#80cbc4</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">@color/accent_material_light</item>
     </style>
 
 </resources>

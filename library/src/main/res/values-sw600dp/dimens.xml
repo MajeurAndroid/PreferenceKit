@@ -16,5 +16,6 @@
   -->
 
 <resources>
-    <dimen name="circlepicker_radius">110dp</dimen>
+    <dimen name="pk_circlepicker_radius">110dp</dimen>
+    <dimen name="pk_preference_header_activity_horizontal_padding">60dp</dimen>
 </resources>

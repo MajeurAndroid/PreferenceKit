@@ -29,23 +29,27 @@
         android:title="CheckBoxPreference"
         android:key="checkbox" />
 
-    <com.majeur.preferencekit.SeekBarPreference
-        android:title="SeekBarPreference"
-        android:summary="This is a seekbar prefrence"
-        android:key="seekbar"
-        android:defaultValue="50"
-        app:maxValue="100"
-        app:knobColor="#80cbc4"/>
+    <com.majeur.preferencekit.PreferenceCategory
+        android:title="Category #1">
 
-    <com.majeur.preferencekit.NumberPickerPreference
-        android:title="NumberPickerPreference"
-        android:summary="Summary"
-        android:key="numberpicker"
-        android:defaultValue="3"
-        app:maxValue="15"
-        app:minValue="2"
-        app:showValueInSummary="true"
-        app:selectionIndicatorsColor="#ff80cbc4"/>
+        <com.majeur.preferencekit.SeekBarPreference
+            android:title="SeekBarPreference"
+            android:summary="This is a seekbar prefrence"
+            android:key="seekbar"
+            android:defaultValue="50"
+            app:maxValue="100"/>
+
+        <com.majeur.preferencekit.NumberPickerPreference
+            android:title="NumberPickerPreference"
+            android:summary="Summary"
+            android:key="numberpicker"
+            android:defaultValue="3"
+            app:maxValue="15"
+            app:minValue="2"
+            app:showValueInSummary="true"
+            app:selectionIndicatorsColor="#ff80cbc4"/>
+
+    </com.majeur.preferencekit.PreferenceCategory>
 
     <com.majeur.preferencekit.SpinnerPreference
         android:title="SpinnerPreference"

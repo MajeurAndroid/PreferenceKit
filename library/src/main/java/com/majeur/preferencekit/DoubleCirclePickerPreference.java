@@ -84,8 +84,8 @@ public class DoubleCirclePickerPreference extends DialogPreference {
     @Override
     protected View onCreateDialogView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.double_dialog_circle_picker, null);
-        mNumberPicker1 = (CirclePickerView) view.findViewById(R.id.circlePicker1);
-        mNumberPicker2 = (CirclePickerView) view.findViewById(R.id.circlePicker2);
+        mNumberPicker1 = (CirclePickerView) view.findViewById(R.id.pk_circlePicker1);
+        mNumberPicker2 = (CirclePickerView) view.findViewById(R.id.pk_circlePicker2);
         return view;
     }
 

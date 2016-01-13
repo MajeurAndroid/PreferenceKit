@@ -19,23 +19,28 @@ package com.majeur.preferencekit;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.NumberPicker;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Hashtable;
 
 /**
  * @hide
  */
 final class Utils {
-
-    public static final int COLOR_ACCENT = Color.parseColor("#ff80cbc4");
 
     public static Drawable getDividerDrawable(NumberPicker numberPicker) {
         try {
@@ -104,6 +109,16 @@ final class Utils {
         return integers[integers.length - 1];
     }
 
+    public static void skipCurrentTag(XmlPullParser parser)
+            throws XmlPullParserException, IOException {
+        int outerDepth = parser.getDepth();
+        int type;
+        while ((type=parser.next()) != XmlPullParser.END_DOCUMENT
+                && (type != XmlPullParser.END_TAG
+                || parser.getDepth() > outerDepth)) {
+        }
+    }
+
     public static double polarAngle(double x, double y) {
         if (x >= 0. && y > 0.) {
             return Math.atan(y / x);
@@ -141,6 +156,35 @@ final class Utils {
             method.setAccessible(true);
             method.invoke(pm, listener);
         } catch (Exception ignored) {
+        }
+    }
+
+    static final class Typefaces {
+
+        private static final String TAG = Typefaces.class.getSimpleName();
+        private static final Hashtable<String, Typeface> mCache = new Hashtable<>();
+
+        private Typefaces() {
+            // no instances
+        }
+
+        static Typeface get(Context context, String assetPath) {
+            synchronized (mCache) {
+                if (!mCache.containsKey(assetPath)) {
+                    try {
+                        Typeface t = Typeface.createFromAsset(context.getAssets(), assetPath);
+                        mCache.put(assetPath, t);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Could not get typeface '" + assetPath + "' Error: " + e.getMessage());
+                        return null;
+                    }
+                }
+                return mCache.get(assetPath);
+            }
+        }
+
+        static Typeface getRobotoMedium(Context context) {
+            return get(context, "Roboto-Medium.ttf");
         }
     }
 }

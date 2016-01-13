@@ -105,7 +105,12 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
 
     @Override
     protected View onCreateView(ViewGroup parent) {
-        return LayoutInflater.from(getContext()).inflate(R.layout.preference_seekbar, parent, false);
+        View view = super.onCreateView(parent);
+
+        ViewGroup container = (ViewGroup) view.findViewById(R.id.pk_bottom_container);
+        LayoutInflater.from(getContext()).inflate(R.layout.preference_seekbar, container);
+
+        return view;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -113,13 +118,13 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
     protected void onBindView(View view) {
         super.onBindView(view);
 
-        mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
+        mSeekBar = (SeekBar) view.findViewById(R.id.pk_seekbar);
         mSeekBar.setMax(mMaxValue);
         mSeekBar.setProgress(mValue);
         // Always set listeners after setting values
         mSeekBar.setOnSeekBarChangeListener(this);
 
-        mValueIndicator = (TextView) view.findViewById(R.id.indicator);
+        mValueIndicator = (TextView) view.findViewById(R.id.pk_indicator);
         mValueIndicator.setVisibility(mShowValue ? View.VISIBLE : View.GONE);
 
         if (mShowValue)
