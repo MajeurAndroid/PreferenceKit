@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -176,6 +177,7 @@ class CirclePickerView extends View {
 
             case MotionEvent.ACTION_MOVE:
                 if (mIsOnWheel) {
+                    //mIndicatorAnimator.cancel();
                     moveIndicatorTo(angle);
                     return true;
                 }
@@ -185,8 +187,10 @@ class CirclePickerView extends View {
             case MotionEvent.ACTION_CANCEL:
                 if (mIsOnWheel) {
                     final int nearestElementIndex = calculateNearestElementIndex(angle);
+                    final int animateToIndex = calculateAnimateToElementIndex(angle);
+                    Log.e(getClass().getSimpleName(), String.format("nearest index = %d, bounds: %d - %d", nearestElementIndex, mMinValue, mMaxValue));
                     mIndicatorAnimator.cancel();
-                    mIndicatorAnimator.setFloatValues(mIndicatorAngle, nearestElementIndex * mAngleStep);
+                    mIndicatorAnimator.setFloatValues(mIndicatorAngle, animateToIndex * mAngleStep);
                     mIndicatorAnimator.addListener(new AnimatorListener() {
                         @Override
                         public void onAnimationEnd(Animator animator) {
@@ -211,13 +215,25 @@ class CirclePickerView extends View {
         float div = angle / mAngleStep;
         int intDiv = (int) div;
         float r = div - intDiv;
+        int index = (r < 0.5f) ? intDiv : intDiv + 1;
 
-        return (r < 0.5f) ? intDiv : intDiv + 1;
+        if (index >= getCount())
+            return 0;
+
+        return index;
+    }
+
+    private int calculateAnimateToElementIndex(float angle) {
+        float div = angle / mAngleStep;
+        int intDiv = (int) div;
+        float r = div - intDiv;
+        return  (r < 0.5f) ? intDiv : intDiv + 1;
     }
 
     private void setPosition(int position) {
         mPosition = position;
         moveIndicatorTo(position * mAngleStep);
+        Log.e(getClass().getSimpleName(), "setpos=" + position);
     }
 
     private void moveIndicatorTo(float angle) {
