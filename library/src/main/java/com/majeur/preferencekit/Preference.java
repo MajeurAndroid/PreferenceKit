@@ -22,6 +22,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Lockable framework default Preferences
+ */
 public class Preference extends android.preference.Preference implements CommonPreferenceDelegate.Delegatable, Lockable {
 
     private CommonPreferenceDelegate mDelegate;
@@ -51,13 +54,13 @@ public class Preference extends android.preference.Preference implements CommonP
     }
 
     @Override
-    public void setLockedIcon(Drawable drawable) {
-        mDelegate.setLockedIcon(drawable);
+    public void setLockedText(String s) {
+        mDelegate.setLockedText(s);
     }
 
     @Override
-    public void setLockedIconResource(int resId) {
-        mDelegate.setLockedIconResource(resId);
+    public void setLockedTextResource(int resId) {
+        mDelegate.setLockedTextResource(resId);
     }
 
     @Override

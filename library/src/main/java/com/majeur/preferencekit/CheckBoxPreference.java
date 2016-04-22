@@ -23,6 +23,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Lockable checkbox preference
+ */
 public class CheckBoxPreference extends android.preference.CheckBoxPreference implements Lockable, CommonPreferenceDelegate.Delegatable {
 
     private CommonPreferenceDelegate mDelegate;
@@ -81,13 +84,13 @@ public class CheckBoxPreference extends android.preference.CheckBoxPreference im
     }
 
     @Override
-    public void setLockedIcon(Drawable drawable) {
-        mDelegate.setLockedIcon(drawable);
+    public void setLockedText(String s) {
+        mDelegate.setLockedText(s);
     }
 
     @Override
-    public void setLockedIconResource(int resId) {
-        mDelegate.setLockedIconResource(resId);
+    public void setLockedTextResource(int resId) {
+        mDelegate.setLockedTextResource(resId);
     }
 
     @Override

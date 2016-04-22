@@ -24,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+/**
+ * Preference fragment that must be used when using {@link PreferenceHeadersActivity}
+ */
 public abstract class PreferenceFragment extends android.preference.PreferenceFragment {
 
     private int mActivityDecorColor = -1;

@@ -47,36 +47,85 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Activity that provides a full featured material design settings screen. With a difference layout depending on screen size
+ */
 public abstract class PreferenceHeadersActivity extends AppCompatActivity implements HeaderListFragmentCallback {
 
     public static class Header {
 
+        /**
+         * Constant returned for heater that have no id set
+         */
+        public static final int INVALID_ID = -1;
+
+        /**
+         * Create a new regular header
+         * @param title Header title
+         * @param summary Header summary
+         * @param iconRes Header icon resource id
+         * @param tintIcon Whether to tint icon
+         * @param fragmentName Fragment to start when header is clicked
+         * @return New regular header
+         */
         public static Header createHeaderRow(CharSequence title, CharSequence summary, int iconRes, boolean tintIcon, CharSequence fragmentName) {
-            return createHeaderRow(title, summary, iconRes, tintIcon, fragmentName, 0, -1);
+            return createHeaderRow(title, summary, iconRes, tintIcon, fragmentName, INVALID_ID, -1);
         }
 
-        public static Header createHeaderRow(CharSequence title, CharSequence summary, int iconRes, boolean tintIcon, CharSequence fragmentName, int headerId) {
+        /**
+         * Create a new regular header
+         * @param title Header title
+         * @param summary Header summary
+         * @param iconRes Header icon resource id
+         * @param tintIcon Whether to tint icon
+         * @param fragmentName Fragment to start when header is clicked
+         * @param headerId Header id to identify or to retrieve this header later
+         * @return New regular header
+         */
+        public static Header createHeaderRow(CharSequence title, CharSequence summary, int iconRes, boolean tintIcon,
+                                             CharSequence fragmentName, int headerId) {
             return createHeaderRow(title, summary, iconRes, tintIcon, fragmentName, headerId, -1);
         }
 
-        public static Header createHeaderRow(CharSequence title, CharSequence summary, int iconRes, boolean tintIcon, CharSequence fragmentName, int headerId, int color) {
-            return new Header(title, summary, iconRes, tintIcon, fragmentName, false, headerId, color);
+        /**
+         * Create a new regular header
+         * @param title Header title
+         * @param summary Header summary
+         * @param iconRes Header icon resource id
+         * @param tintIcon Whether to tint icon
+         * @param fragmentName Fragment to start when header is clicked
+         * @param headerId Header id to identify or to retrieve this header later
+         * @param backgroundColor Background color of this header
+         * @return New regular header
+         */
+        public static Header createHeaderRow(CharSequence title, CharSequence summary, int iconRes, boolean tintIcon,
+                                             CharSequence fragmentName, int headerId, int backgroundColor) {
+            return new Header(title, summary, iconRes, tintIcon, fragmentName, false, headerId, backgroundColor);
         }
 
+        /**
+         * Create a new header separator
+         * @return New header separator
+         */
         public static Header createHeaderSeparator() {
             return createHeaderSeparator(null);
         }
 
+        /**
+         * Create a new header separator
+         * @param title Header separator title (Useful to make sections)
+         * @return New header separator
+         */
         public static Header createHeaderSeparator(CharSequence title) {
-            return new Header(title, null, 0, false, null, true, 0, -1);
+            return new Header(title, null, 0, false, null, true, INVALID_ID, -1);
         }
 
         private Header() {
             this.color = -1;
         }
 
-        private Header(CharSequence title, CharSequence summary, int iconRes, boolean tintIcon, CharSequence fragmentName, boolean isSeparator,
-                       int id, int color) {
+        private Header(CharSequence title, CharSequence summary, int iconRes, boolean tintIcon,
+                       CharSequence fragmentName, boolean isSeparator, int id, int color) {
             this.title = title;
             this.summary = summary;
             this.iconRes = iconRes;
@@ -96,20 +145,34 @@ public abstract class PreferenceHeadersActivity extends AppCompatActivity implem
         int color;
         int id;
 
+        /**
+         * @return Header id if set when creating this header, {@link #INVALID_ID} else
+         */
         public int getHeaderId() {
             return id;
         }
 
-        public void setColor(int color) {
+        /**
+         * Set background color of this header. A {@link #notifyHeadersChanged()} is required to apply changes
+         * @param color Color to be the background color
+         */
+        public void setBackgroundColor(int color) {
             this.color = color;
         }
     }
 
-    public static final int STATE_HEADER_LIST = 0;
-    public static final int STATE_HEADER_OPENED = 1;
+    /**
+     * This stage means that user is in the header list
+     */
+    public static final int STAGE_HEADERS_LIST = 0;
+
+    /**
+     * This stage means that user has clicked an header and is currently viewing its fragment
+     */
+    public static final int STAGE_HEADER_FRAGMENT_OPENED = 1;
 
     private int mDecorColor;
-    private int mState;
+    private int mUserStage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,39 +194,72 @@ public abstract class PreferenceHeadersActivity extends AppCompatActivity implem
         return (HeaderListFragment) getFragmentManager().findFragmentByTag(HeaderListFragment.FRAGMENT_TAG);
     }
 
-    public void addHeadersFromXml(int xmlResId) {
+    /**
+     * Add headers from xml
+     * @param xmlResId Headers xml resource id
+     */
+    public void addHeadersFromResources(int xmlResId) {
         getHeaderListFragment().addHeadersFromXml(xmlResId);
     }
 
+    /**
+     * @return {@link ListView} containing headers
+     */
     public ListView getHeadersListView() {
         return getHeaderListFragment().getListView();
     }
 
+    /**
+     * @return Header count, including separators
+     */
     public int getHeaderCount() {
         return getHeaderListFragment().getHeaderCount();
     }
 
+    /**
+     * @param position Desired header index
+     * @return Header at desired index, throws {@link IndexOutOfBoundsException} if index isn't valid
+     */
     public Header getHeaderAt(int position) {
         return getHeaderListFragment().getHeaderAt(position);
     }
 
+    /**
+     * Add header at the bottom of the list
+     * @param header Header to add
+     */
     public void addHeader(Header header) {
         addHeaderAt(header, -1);
     }
 
+    /**
+     * Add header at desired index, throws {@link IndexOutOfBoundsException} if index isn't valid
+     * @param header Header to add
+     * @param position Desired index
+     */
     public void addHeaderAt(Header header, int position) {
         getHeaderListFragment().addHeaderAt(header, position);
     }
 
+    /**
+     * Cause reload of all headers views. Call this method when any modifications have been done to an header
+     */
     public void notifyHeadersChanged() {
         getHeaderListFragment().notifyHeadersChanged();
     }
 
+    /**
+     * Set the color of all decoration of this activity (Separator titles, icon tint if enabled, preference category titles ..)
+     * @param color Decoration color
+     */
     public void setDecorColor(int color) {
         mDecorColor = color;
         getHeaderListFragment().setDecorColor(color);
     }
 
+    /**
+     * @return The current decoration color
+     */
     public int getDecorColor() {
         return mDecorColor;
     }
@@ -176,35 +272,46 @@ public abstract class PreferenceHeadersActivity extends AppCompatActivity implem
             super.onBackPressed();
     }
 
-    private void syncState(int state) {
-        mState = state;
-        if (state == STATE_HEADER_LIST) {
+    private void syncUserStage(int stage) {
+        mUserStage = stage;
+        if (stage == STAGE_HEADERS_LIST) {
             String defaultTitle = onGetDefaultTitle();
             if (defaultTitle != null)
                 setTitle(defaultTitle);
         }
-        onStateChanged(state);
+        onUserStageChanged(stage);
     }
 
-    public int getState() {
-        return mState;
+    /**
+     * @return The current stage
+     */
+    public int getUserStage() {
+        return mUserStage;
     }
 
-    protected void onStateChanged(int newState) {
+    /**
+     * Override this method to get a callback of any user stage changes
+     * @param newStage The new user stage
+     */
+    protected void onUserStageChanged(int newStage) {
     }
 
+    /**
+     * This method is called each time an header is clicked. By default it opens header's fragment if it has been set
+     * @param header Clicked header
+     */
     @Override
     public void onHeaderClicked(PreferenceHeadersActivity.Header header) {
         CharSequence fragmentName = header.fragmentName;
 
         if (!TextUtils.isEmpty(fragmentName)) {
-            Fragment fragment = Fragment.instantiate(PreferenceHeadersActivity.this, fragmentName.toString());
+            Fragment fragment = Fragment.instantiate(this, fragmentName.toString());
 
             if (!(fragment instanceof PreferenceFragment))
-                throw new IllegalStateException("Fragment should be instance of PreferenceFragment");
+                throw new IllegalStateException("Fragment must be an instance of com.majeur.preferencekit.PreferenceFragment");
 
             setTitle(header.title);
-            syncState(STATE_HEADER_OPENED);
+            syncUserStage(STAGE_HEADER_FRAGMENT_OPENED);
             startFragment(fragment);
         }
     }
@@ -219,6 +326,7 @@ public abstract class PreferenceHeadersActivity extends AppCompatActivity implem
     }
 
     protected abstract String onGetDefaultTitle();
+
 
     public static class HeaderListFragment extends Fragment {
 
@@ -239,7 +347,7 @@ public abstract class PreferenceHeadersActivity extends AppCompatActivity implem
         @Override
         public void onStart() {
             super.onStart();
-            ((PreferenceHeadersActivity) getActivity()).syncState(STATE_HEADER_LIST);
+            ((PreferenceHeadersActivity) getActivity()).syncUserStage(STAGE_HEADERS_LIST);
         }
 
         @Nullable

@@ -27,14 +27,11 @@ import android.widget.NumberPicker;
 /**
  * Simple class that provide built-in preference with numberPicker as dialog
  */
-public class NumberPickerPreference extends DialogPreference {
+public class NumberPickerPreference extends CirclePickerPreference {
 
-    private int mMin;
-    private int mMax;
-    private int mValue;
     private int mDividersColor;
 
-    private boolean mWrapSelectorWheel, mEditableValue, mShowValueInSummary;
+    private boolean mWrapSelectorWheel, mEditableValue;
 
     private NumberPicker mNumberPicker;
 
@@ -43,11 +40,8 @@ public class NumberPickerPreference extends DialogPreference {
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_numberpicker, defStyleAttr, 0);
-            mMax = typedArray.getInteger(R.styleable.preference_numberpicker_maxValue, 100);
-            mMin = typedArray.getInteger(R.styleable.preference_numberpicker_minValue, 0);
             mWrapSelectorWheel = typedArray.getBoolean(R.styleable.preference_numberpicker_wrapSelectorWheel, false);
             mEditableValue = typedArray.getBoolean(R.styleable.preference_numberpicker_editableValue, false);
-            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
             mDividersColor = typedArray.getColor(R.styleable.preference_numberpicker_selectionIndicatorsColor,
                     Utils.getAttrColor(context, R.attr.colorAccent));
             typedArray.recycle();
@@ -60,33 +54,6 @@ public class NumberPickerPreference extends DialogPreference {
 
     public NumberPickerPreference(Context context) {
         this(context, null, 0);
-    }
-
-    /**
-     * Provide the default value to the system
-     */
-    @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getInt(index, mMin);
-    }
-
-    @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        int value = restorePersistedValue ? getPersistedInt(mMin) : (Integer) defaultValue;
-        setNewValue(value);
-    }
-
-    private void setNewValue(int newValue) {
-        if (isPersistent())
-            persistInt(newValue);
-
-        if (getOnPreferenceChangeListener() != null)
-            getOnPreferenceChangeListener().onPreferenceChange(this, newValue);
-
-        mValue = newValue;
-
-        if (mShowValueInSummary)
-            setSummary(String.valueOf(mValue));
     }
 
     @Override
@@ -119,27 +86,21 @@ public class NumberPickerPreference extends DialogPreference {
 
     }
 
-    public void setMin(int min) {
-        mMin = min;
-        if (mValue < min)
-            setNewValue(min);
-    }
-
-    public void setMax(int max) {
-        mMax = max;
-        if (mValue > max)
-            setNewValue(max);
-    }
-
+    /**
+     * Sets whether the selector wheel shown during flinging/scrolling should wrap around the getMinValue() and getMaxValue() values.
+     * By default if the range (max - min) is more than the number of items shown on the selector wheel the selector wheel wrapping is enabled.
+     * Note: If the number of items, i.e. the range ( getMaxValue() - getMinValue()) is less than the number of items shown on the selector wheel, the selector wheel will not wrap. Hence, in such a case calling this method is a NOP.
+     * @param wrapSelectorWheel Whether to wrap
+     */
     public void setWrapSelectorWheel(boolean wrapSelectorWheel) {
         mWrapSelectorWheel = wrapSelectorWheel;
     }
 
+    /**
+     * Set if the value in {@link NumberPicker} should be editable through soft input
+     * @param editableValue Whether to be editable
+     */
     public void setEditableValue(boolean editableValue) {
         mEditableValue = editableValue;
-    }
-
-    public void setShowValueInSummary(boolean showValueInSummary) {
-        mShowValueInSummary = showValueInSummary;
     }
 }

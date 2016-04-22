@@ -23,7 +23,7 @@
         android:summary="dkfjdjfkds"
         android:key="base"
         app:locked="true"
-        app:lockedIcon="@mipmap/ic_launcher"/>
+        app:lockedText="PRIME"/>
 
     <com.majeur.preferencekit.CheckBoxPreference
         android:title="CheckBoxPreference"
@@ -97,7 +97,7 @@
         android:title="ColorPickerPreference"
         android:summary="This is a color picker preference"
         android:key="colorpicker"
-        android:defaultValue="-8336444"
+        android:defaultValue="#ff0099cc"
         app:alphaAllowed="false"
         app:saturationAndValueAllowed="true"/>
 

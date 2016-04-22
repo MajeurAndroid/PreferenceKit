@@ -29,6 +29,27 @@ import android.view.View;
  */
 public class DoubleCirclePickerPreference extends DialogPreference {
 
+    /**
+     * Create a string to be persisted that contains the two values.
+     * @param value1 first value (corresponds to the first picker)
+     * @param value2 second value (corresponds to the second picker)
+     * @return string to be persisted
+     */
+    public static String createDataToPersist(int value1, int value2) {
+        return value1 + "x" + value2;
+    }
+
+    /**
+     * Decode the persisted value to provide the two integers that had been persisted
+     * @param data persisted data
+     * @return a {@link android.util.Pair} which contains the two values
+     */
+    public static Pair<Integer, Integer> getValuesFromPersistedData(String data) {
+        String[] strings = data.split("x");
+        if (strings.length != 2) return null;
+        return new Pair<>(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]));
+    }
+
     private int mMin1, mMin2;
     private int mMax1, mMax2;
     private int mValue1, mValue2;
@@ -46,7 +67,7 @@ public class DoubleCirclePickerPreference extends DialogPreference {
             mMin1 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_minValue1, 1);
             mMax2 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_maxValue2, 10);
             mMin2 = typedArray.getInteger(R.styleable.preference_doublecirclepicker_minValue2, 1);
-            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
+            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_doublecirclepicker_showValueInSummary, false);
             typedArray.recycle();
         }
     }
@@ -68,11 +89,10 @@ public class DoubleCirclePickerPreference extends DialogPreference {
     }
 
     private void setNewValue(int newValue1, int newValue2) {
-        if (isPersistent())
-            persistString(createDataToPersist(newValue1, newValue2));
+        final String persistedValue = createDataToPersist(newValue1, newValue2);
 
-        if (getOnPreferenceChangeListener() != null)
-            getOnPreferenceChangeListener().onPreferenceChange(this, createDataToPersist(newValue1, newValue2));
+        if (isPersistent() && callChangeListener(persistedValue))
+            persistString(persistedValue);
 
         mValue1 = newValue1;
         mValue2 = newValue2;
@@ -169,26 +189,4 @@ public class DoubleCirclePickerPreference extends DialogPreference {
     public void setShowValueInSummary(boolean showValueInSummary) {
         mShowValueInSummary = showValueInSummary;
     }
-
-    /**
-     * Create a string to be persisted that contains the two values.
-     * @param value1 first value (corresponds to the first picker)
-     * @param value2 second value (corresponds to the second picker)
-     * @return string to be persisted
-     */
-    public static String createDataToPersist(int value1, int value2) {
-        return value1 + "x" + value2;
-    }
-
-    /**
-     * Decode the persisted value to provide the two integers that had been persisted
-     * @param data persisted data
-     * @return a {@link android.util.Pair} which contains the two values
-     */
-    public static Pair<Integer, Integer> getValuesFromPersistedData(String data) {
-        String[] strings = data.split("x");
-        if (strings.length != 2) return null;
-        return new Pair<>(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]));
-    }
-
 }

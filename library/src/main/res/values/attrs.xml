@@ -24,7 +24,7 @@
 
     <declare-styleable name="preference_base">
         <attr name="locked" format="boolean" />
-        <attr name="lockedIcon" format="reference" />
+        <attr name="lockedText" format="reference|string" />
     </declare-styleable>
 
     <declare-styleable name="preference_seekbar">
@@ -34,11 +34,8 @@
     </declare-styleable>
 
     <declare-styleable name="preference_numberpicker">
-        <attr name="maxValue" />
-        <attr name="minValue" />
         <attr name="wrapSelectorWheel" format="boolean" />
         <attr name="editableValue" format="boolean" />
-        <attr name="showValueInSummary" />
         <attr name="selectionIndicatorsColor" format="color" />
     </declare-styleable>
 
@@ -80,7 +77,6 @@
         <attr name="radioTitles" format="reference" />
         <attr name="radioSummaries" format="reference" />
         <attr name="radioIcons" format="reference" />
-        <attr name="titleColor" format="color" />
     </declare-styleable>
     
     <!-- Header activity -->

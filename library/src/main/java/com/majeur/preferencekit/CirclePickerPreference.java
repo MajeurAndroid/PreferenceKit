@@ -27,13 +27,13 @@ import android.view.View;
  */
 public class CirclePickerPreference extends DialogPreference {
 
-    private int mMin;
-    private int mMax;
-    private int mValue;
+   protected int mMin;
+    protected int mMax;
+    protected int mValue;
 
     private boolean mShowValueInSummary;
 
-    private CirclePickerView mNumberPicker;
+    private CirclePickerView mCirclePicker;
 
     public CirclePickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -42,7 +42,7 @@ public class CirclePickerPreference extends DialogPreference {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_circlepicker, defStyleAttr, 0);
             mMax = typedArray.getInteger(R.styleable.preference_circlepicker_maxValue, 10);
             mMin = typedArray.getInteger(R.styleable.preference_circlepicker_minValue, 1);
-            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_numberpicker_showValueInSummary, false);
+            mShowValueInSummary = typedArray.getBoolean(R.styleable.preference_circlepicker_showValueInSummary, false);
             typedArray.recycle();
         }
     }
@@ -70,12 +70,9 @@ public class CirclePickerPreference extends DialogPreference {
         setNewValue(value);
     }
 
-    private void setNewValue(int newValue) {
-        if (isPersistent())
+    protected void setNewValue(int newValue) {
+        if (isPersistent() && callChangeListener(newValue))
             persistInt(newValue);
-
-        if (getOnPreferenceChangeListener() != null)
-            getOnPreferenceChangeListener().onPreferenceChange(this, newValue);
 
         mValue = newValue;
 
@@ -86,7 +83,7 @@ public class CirclePickerPreference extends DialogPreference {
     @Override
     protected View onCreateDialogView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_circle_picker, null);
-        mNumberPicker = (CirclePickerView) view.findViewById(R.id.pk_circlePicker);
+        mCirclePicker = (CirclePickerView) view.findViewById(R.id.pk_circlePicker);
         return view;
     }
 
@@ -94,29 +91,40 @@ public class CirclePickerPreference extends DialogPreference {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        mNumberPicker.setBounds(mMin, mMax);
-        mNumberPicker.setValue(mValue);
+        if (mCirclePicker != null) { // Useful when sub classes call super
+            mCirclePicker.setBounds(mMin, mMax);
+            mCirclePicker.setValue(mValue);
+        }
     }
 
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult)
-            setNewValue(mNumberPicker.getValue());
+            setNewValue(mCirclePicker.getValue());
 
     }
 
+    /**
+     * Set the minimum value of the picker
+     */
     public void setMin(int min) {
         mMin = min;
         if (mValue < min)
             setNewValue(min);
     }
 
+    /**
+     * Set the maximum value of the picker
+     */
     public void setMax(int max) {
         mMax = max;
         if (mValue > max)
             setNewValue(max);
     }
 
+    /**
+     * Set if the value should be shown in summary
+     */
     public void setShowValueInSummary(boolean showValueInSummary) {
         mShowValueInSummary = showValueInSummary;
     }

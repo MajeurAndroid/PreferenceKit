@@ -39,7 +39,6 @@ public class RadioPreferenceGroup extends PreferenceGroup {
     private CharSequence[] mRadioTitles;
     private CharSequence[] mRadioSummaries;
     private Drawable[] mRadioIcons;
-    private int mTitleColor = -1;
 
     private int mSelectedIndex;
 
@@ -62,7 +61,6 @@ public class RadioPreferenceGroup extends PreferenceGroup {
             mRadioTitles = typedArray.getTextArray(R.styleable.preference_radiogroup_radioTitles);
             mRadioSummaries = typedArray.getTextArray(R.styleable.preference_radiogroup_radioSummaries);
             int iconArrayResId = typedArray.getResourceId(R.styleable.preference_radiogroup_radioIcons, 0);
-            mTitleColor = typedArray.getColor(R.styleable.preference_radiogroup_titleColor, -1);
             typedArray.recycle();
 
             if (iconArrayResId != 0) {
@@ -113,13 +111,25 @@ public class RadioPreferenceGroup extends PreferenceGroup {
     }
 
     private void syncChildren() {
-        removeAll();
+        int currentCount = getPreferenceCount();
+        final int desiredCount = mRadioTitles.length;
 
-        for (int i = 0; i < mRadioTitles.length; i++) {
+        while (currentCount > desiredCount) {
+            currentCount--;
+            removePreference(getPreference(currentCount));
+        }
+
+        while (currentCount < desiredCount) {
             InternalRadioPreference preference = new InternalRadioPreference(getContext());
 
-            preference.setOrder(i);
+            preference.setOrder(currentCount++);
             preference.setListener(mOnChildRadioCheckedListener);
+
+            super.addPreference(preference);
+        }
+
+        for (int i = 0; i < desiredCount; i++) {
+            Preference preference = getPreference(i);
             preference.setTitle(mRadioTitles[i]);
 
             if (mRadioSummaries != null)
@@ -127,8 +137,6 @@ public class RadioPreferenceGroup extends PreferenceGroup {
 
             if (mRadioIcons != null)
                 preference.setIcon(mRadioIcons[i]);
-
-            super.addPreference(preference);
         }
 
         notifyChildChanged();
@@ -155,7 +163,8 @@ public class RadioPreferenceGroup extends PreferenceGroup {
         if (mSelectedIndex != index) {
             mSelectedIndex = index;
 
-            persistInt(index);
+            if (isPersistent() && callChangeListener(index))
+                persistInt(index);
 
             notifyChildChanged();
         }
@@ -177,10 +186,21 @@ public class RadioPreferenceGroup extends PreferenceGroup {
 
     @Override
     protected View onCreateView(ViewGroup parent) {
-        TextView titleView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.preference_group_radio, parent, false);
-        if (mTitleColor != -1)
-            titleView.setTextColor(mTitleColor);
-        return titleView;
+        return LayoutInflater.from(parent.getContext()).inflate(R.layout.preference_category, parent, false);
+    }
+
+    @Override
+    protected void onBindView(View view) {
+        super.onBindView(view);
+        TextView textView = (TextView) view.findViewById(android.R.id.title);
+        textView.setTypeface(Utils.Typefaces.getRobotoMedium(getContext()));
+
+        if (getContext() instanceof PreferenceHeadersActivity) {
+            PreferenceHeadersActivity activity = (PreferenceHeadersActivity) getContext();
+            textView.setTextColor(activity.getDecorColor());
+        }
+
+        syncChildren();
     }
 
     private void notifyChildChanged() {
@@ -246,7 +266,7 @@ public class RadioPreferenceGroup extends PreferenceGroup {
 
             ViewGroup stub = (ViewGroup) view.findViewById(R.id.pk_stub);
             stub.removeAllViews(); // CheckBox has been added in super call
-            LayoutInflater.from(getContext()).inflate(R.layout.widget_radio, stub, true);
+            LayoutInflater.from(getContext()).inflate(R.layout.widget_radio, stub);
 
             return view;
         }

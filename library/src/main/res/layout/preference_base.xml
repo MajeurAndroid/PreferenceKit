@@ -16,7 +16,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:background="?android:attr/selectableItemBackground"
     android:paddingStart="@dimen/pk_preference_horizontal_padding"
@@ -26,18 +26,11 @@
     android:orientation="vertical"
     android:gravity="center_vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <!-- Shows indicator to differentiate locked state and disabled state -->
-        <ImageView
-            android:id="@+id/pk_locked_icon"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:minHeight="?android:attr/listPreferredItemHeight">
 
         <!-- Default preference layout -->
         <ImageView
@@ -46,12 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dip"
             android:layout_marginLeft="7dip"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true" />
+            android:layout_gravity="center_vertical"
+            />
 
         <!-- Default preference layout -->
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dip"
             android:layout_marginEnd="6dip"
@@ -59,11 +52,8 @@
             android:layout_marginLeft="7dip"
             android:layout_marginTop="6dip"
             android:layout_marginBottom="6dip"
-            android:layout_toRightOf="@android:id/icon"
-            android:layout_toEndOf="@android:id/icon"
-            android:layout_toLeftOf="@+id/pk_stub"
-            android:layout_toStartOf="@+id/pk_stub"
-            android:layout_centerVertical="true">
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@android:id/title"
@@ -92,17 +82,24 @@
             android:id="@+id/pk_stub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
             android:minWidth="48dp"
-            android:gravity="center" />
+            android:gravity="center"/>
 
-    </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/pk_bottom_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <!-- Shows indicator for locked state -->
+        <TextView
+            android:id="@+id/pk_locked_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:paddingStart="2dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingEnd="2dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="1dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

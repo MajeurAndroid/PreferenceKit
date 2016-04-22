@@ -23,6 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * Preference category with material style and auto color feature
+ */
 public class PreferenceCategory extends android.preference.PreferenceCategory {
 
     public PreferenceCategory(Context context, AttributeSet attrs, int defStyleAttr) {

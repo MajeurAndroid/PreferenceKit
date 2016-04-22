@@ -31,7 +31,7 @@ import android.widget.TextView;
 /**
  * Preference that allows user to input an value through a {@link SeekBar}.
  */
-public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarChangeListener {
+public class SeekBarPreference extends BottomWidgetPreference implements SeekBar.OnSeekBarChangeListener {
 
     private static final int DEFAULT_VALUE = 0;
 
@@ -70,9 +70,6 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
         }
     }
 
-    /**
-     * Provide the default value to the system
-     */
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         return a.getInt(index, DEFAULT_VALUE);
@@ -84,15 +81,9 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
         setNewValue(value);
     }
 
-    /**
-     * Called to commit value change
-     */
     private void setNewValue(int newValue) {
-        if (isPersistent())
+        if (isPersistent() && callChangeListener(newValue))
             persistInt(newValue);
-
-        if (getOnPreferenceChangeListener() != null)
-            getOnPreferenceChangeListener().onPreferenceChange(this, newValue);
 
         mValue = newValue;
 
@@ -104,27 +95,23 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
     }
 
     @Override
-    protected View onCreateView(ViewGroup parent) {
-        View view = super.onCreateView(parent);
+    protected View onCreateBottomWidgetView(ViewGroup parent) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.bottom_widget_seekbar, parent, false);
 
-        ViewGroup container = (ViewGroup) view.findViewById(R.id.pk_bottom_container);
-        LayoutInflater.from(getContext()).inflate(R.layout.preference_seekbar, container);
+        mSeekBar = (SeekBar) view.findViewById(R.id.pk_seekbar);
+        mValueIndicator = (TextView) view.findViewById(R.id.pk_indicator);
 
         return view;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    protected void onBindView(View view) {
-        super.onBindView(view);
-
-        mSeekBar = (SeekBar) view.findViewById(R.id.pk_seekbar);
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    protected void onBindBottomWidgetView(View widgetView) {
         mSeekBar.setMax(mMaxValue);
         mSeekBar.setProgress(mValue);
         // Always set listeners after setting values
         mSeekBar.setOnSeekBarChangeListener(this);
 
-        mValueIndicator = (TextView) view.findViewById(R.id.pk_indicator);
         mValueIndicator.setVisibility(mShowValue ? View.VISIBLE : View.GONE);
 
         if (mShowValue)
@@ -141,29 +128,39 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
         setNewValue(i);
     }
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
-
+    /**
+     * Set progressbar max value. If max value is lower than current value, current value will be new maximum
+     * @param maxValue Value to be the maximum
+     */
     public void setMaxValue(int maxValue) {
         mMaxValue = maxValue;
         if (mValue > maxValue)
             setNewValue(maxValue);
     }
 
+    /**
+     * Set if the value should be shown next to the progress bar
+     * @param showValue Whether to show value
+     */
     public void setShowValue(boolean showValue) {
         mShowValue = showValue;
     }
 
-    public void setKnobColor(int color) {
+    /**
+     * Set progress bar color (API16+ only)
+     * @param color Progress bar color
+     */
+    public void setProgressBarColor(int color) {
         mKnobCustomColor = true;
         mKnobColor = color;
         notifyChanged();
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
     }
 }

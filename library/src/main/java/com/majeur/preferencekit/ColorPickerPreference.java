@@ -18,7 +18,9 @@ package com.majeur.preferencekit;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +72,11 @@ public class ColorPickerPreference extends DialogPreference {
      */
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
+        TypedValue value = a.peekValue(index);
+
+        if (value.type == TypedValue.TYPE_STRING && value.string.charAt(0) == '#')
+            return Color.parseColor(value.string.toString());
+
         return a.getColor(index, mDefaultValue);
     }
 
@@ -80,11 +87,8 @@ public class ColorPickerPreference extends DialogPreference {
     }
 
     private void setNewValue(int newValue) {
-        if (isPersistent())
+        if (isPersistent() && callChangeListener(newValue))
             persistInt(newValue);
-
-        if (getOnPreferenceChangeListener() != null)
-            getOnPreferenceChangeListener().onPreferenceChange(this, newValue);
 
         mValue = newValue;
 
@@ -116,6 +120,7 @@ public class ColorPickerPreference extends DialogPreference {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         mColorPickerView.setOldCenterColor(mValue);
+        mColorPickerView.setColor(mValue);
     }
 
     @Override
@@ -139,5 +144,20 @@ public class ColorPickerPreference extends DialogPreference {
     protected void onBindView(View view) {
         super.onBindView(view);
         mColorIndicator.setColor(mValue);
+    }
+
+    /**
+     * Set the current color and persist it
+     * @param color Color to set
+     */
+    public void setColor(int color) {
+        setNewValue(color);
+    }
+
+    /**
+     * @return The current selected and persisted color
+     */
+    public int getColor() {
+        return mValue;
     }
 }

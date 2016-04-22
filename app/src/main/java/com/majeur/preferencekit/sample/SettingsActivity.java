@@ -18,18 +18,7 @@ package com.majeur.preferencekit.sample;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.majeur.preferencekit.CheckBoxPreference;
-import com.majeur.preferencekit.DialogPreference;
-import com.majeur.preferencekit.ExtraButtonsPreference;
-import com.majeur.preferencekit.Preference;
 import com.majeur.preferencekit.PreferenceHeadersActivity;
 
 public class SettingsActivity extends PreferenceHeadersActivity {
@@ -38,7 +27,7 @@ public class SettingsActivity extends PreferenceHeadersActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addHeadersFromXml(R.xml.headers);
+        addHeadersFromResources(R.xml.headers);
 
         addHeaderAt(Header.createHeaderRow("Prime version",
                 "Please buy prime to let me make some money",

@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
  * persist some data.
  * Buttons clicks can be listened through {@link OnExtraButtonClickListener}
  */
-public class ExtraButtonsPreference extends Preference {
+public class ExtraButtonsPreference extends BottomWidgetPreference {
 
     private CharSequence[] mLabels;
     private LinearLayout mContainer;
@@ -85,26 +85,23 @@ public class ExtraButtonsPreference extends Preference {
     }
 
     /**
-     * Set the extra buttons listener
+     * Sets the extra buttons listener
      */
     public void setOnExtraButtonClickListener(OnExtraButtonClickListener l) {
         mListener = l;
     }
 
     @Override
-    protected View onCreateView(ViewGroup parent) {
-        View view = super.onCreateView(parent);
+    protected View onCreateBottomWidgetView(ViewGroup parent) {
+        View view = mInflater.inflate(R.layout.bottom_widget_extrabuttons, parent, false);
 
-        ViewGroup container = (ViewGroup) view.findViewById(R.id.pk_bottom_container);
-        mInflater.inflate(R.layout.preference_extrabuttons, container);
+        mContainer = (LinearLayout) view.findViewById(R.id.pk_extra_container);
 
         return view;
     }
 
     @Override
-    protected void onBindView(View view) {
-        super.onBindView(view);
-        mContainer = (LinearLayout) view.findViewById(R.id.pk_extra_container);
+    protected void onBindBottomWidgetView(View widgetView) {
         setButtons();
     }
 

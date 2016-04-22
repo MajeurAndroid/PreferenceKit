@@ -16,19 +16,11 @@
 
 package com.majeur.preferencekit;
 
-import android.graphics.drawable.Drawable;
+import android.util.Log;
 
-/**
- * Interface to define the contract to let a preference to be locked.
- * For example, locked because of a Premium version of your app.
- */
-interface Lockable {
+final class L {
 
-    void setLockedText(String s);
-
-    void setLockedTextResource(int resId);
-
-    void setLocked(boolean locked);
-
-    boolean isLocked();
+    static void l(String s, Object... args) {
+        Log.e("LOG", (args.length == 0) ? s : String.format(s, args));
+    }
 }

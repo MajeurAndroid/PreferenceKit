@@ -188,7 +188,7 @@ class CirclePickerView extends View {
                 if (mIsOnWheel) {
                     final int nearestElementIndex = calculateNearestElementIndex(angle);
                     final int animateToIndex = calculateAnimateToElementIndex(angle);
-                    Log.e(getClass().getSimpleName(), String.format("nearest index = %d, bounds: %d - %d", nearestElementIndex, mMinValue, mMaxValue));
+
                     mIndicatorAnimator.cancel();
                     mIndicatorAnimator.setFloatValues(mIndicatorAngle, animateToIndex * mAngleStep);
                     mIndicatorAnimator.addListener(new AnimatorListener() {
@@ -233,7 +233,6 @@ class CirclePickerView extends View {
     private void setPosition(int position) {
         mPosition = position;
         moveIndicatorTo(position * mAngleStep);
-        Log.e(getClass().getSimpleName(), "setpos=" + position);
     }
 
     private void moveIndicatorTo(float angle) {

@@ -27,9 +27,9 @@ import java.util.Arrays;
  * @see SpinnerPreference
  * @see RadioPreference
  */
-abstract class EntrySetPreference extends Preference {
+abstract class EntrySetPreference extends BottomWidgetPreference {
 
-    /**
+    /*
      * Key used to retrieve later the real default values,
      * when {@link #onGetDefaultValue(TypedArray, int)} is called, it's to early to access
      * entryValues, so if default values is needed, we return this string, and later we
@@ -93,23 +93,27 @@ abstract class EntrySetPreference extends Preference {
         setValue(value);
     }
 
+    /**
+     * Set the current selected item and persist its entryValue
+     * @param index Item index
+     */
     public void setSelectedItem(int index) {
         if (index < 0 || index >= mEntryValues.length)
-            throw new IndexOutOfBoundsException("index is " + index + ", size is " + mEntryValues.length);
+            throw new IllegalArgumentException("Desired index is " + index + ", size is " + mEntryValues.length);
 
         setValue(mEntryValues[index]);
     }
 
+    /**
+     * @return The current selected item index
+     */
     public int getSelectedItem() {
         return Arrays.asList(mEntryValues).indexOf(mValue);
     }
 
     protected void setValue(CharSequence value) {
-        if (isPersistent())
+        if (isPersistent() && callChangeListener(value))
             persistString(value.toString());
-
-        if (getOnPreferenceChangeListener() != null)
-            getOnPreferenceChangeListener().onPreferenceChange(this, value);
 
         mValue = value;
 
@@ -125,18 +129,33 @@ abstract class EntrySetPreference extends Preference {
 
     protected abstract void onSetNewValue(CharSequence newValue);
 
+    /**
+     * @return Entries array
+     */
     public CharSequence[] getEntries() {
         return mEntries;
     }
 
+    /**
+     * Set the entries to use
+     * @param entries Entries to use
+     */
     public void setEntries(CharSequence[] entries) {
         mEntries = entries;
+        notifyChanged();
     }
 
+    /**
+     * @return Entry values array
+     */
     public CharSequence[] getEntryValues() {
         return mEntryValues;
     }
 
+    /**
+     * Set the entry values to use
+     * @param entryValues Entry values to use
+     */
     public void setEntryValues(CharSequence[] entryValues) {
         mEntryValues = entryValues;
     }

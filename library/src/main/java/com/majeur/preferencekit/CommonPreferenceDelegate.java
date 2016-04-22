@@ -18,13 +18,17 @@ package com.majeur.preferencekit;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.preference.Preference;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Class used to keep one piece of code when we extend multiple framework classes.
@@ -36,7 +40,7 @@ class CommonPreferenceDelegate implements Lockable {
     private Preference mPreference;
 
     private boolean mLocked;
-    private Drawable mLockedIconDrawable;
+    private String mLockedText;
 
     CommonPreferenceDelegate(Preference preference) {
         if (!(preference instanceof Delegatable))
@@ -49,13 +53,13 @@ class CommonPreferenceDelegate implements Lockable {
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.preference_base, 0, 0);
             mLocked = typedArray.getBoolean(R.styleable.preference_base_locked, false);
-            mLockedIconDrawable = typedArray.getDrawable(R.styleable.preference_base_lockedIcon);
+            mLockedText = typedArray.getString(R.styleable.preference_base_lockedText);
             typedArray.recycle();
         }
         setLocked(mLocked);
 
-        if (mLockedIconDrawable == null) // We set the default icon
-            mLockedIconDrawable = mPreference.getContext().getResources().getDrawable(R.drawable.lock24);
+        if (mLockedText == null) // We set the default icon
+            mLockedText = "Locked";
     }
 
     public View onCreateView(ViewGroup parent) {
@@ -64,18 +68,22 @@ class CommonPreferenceDelegate implements Lockable {
 
     public void onBindView(View view) {
         ((Delegatable) mPreference).superOnBindView(view);
-        ImageView imageView = (ImageView) view.findViewById(R.id.pk_locked_icon);
-        imageView.setImageDrawable(mLocked ? mLockedIconDrawable : null);
+        TextView textView = (TextView) view.findViewById(R.id.pk_locked_view);
+        textView.setBackgroundColor(Utils.getAttrColor(mPreference.getContext(), R.attr.colorAccent));
+        textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+        textView.setTextColor(Color.WHITE);
+        textView.setText(mLockedText);
+        textView.setVisibility(mLocked ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void setLockedIcon(Drawable drawable) {
-        mLockedIconDrawable = drawable;
+    public void setLockedText(String s) {
+        mLockedText = s;
     }
 
     @Override
-    public void setLockedIconResource(int resId) {
-        mLockedIconDrawable = mPreference.getContext().getResources().getDrawable(resId);
+    public void setLockedTextResource(int resId) {
+        mLockedText = mPreference.getContext().getString(resId);
     }
 
     @Override

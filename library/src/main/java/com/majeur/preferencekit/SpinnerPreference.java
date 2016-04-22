@@ -56,23 +56,20 @@ public class SpinnerPreference extends EntrySetPreference {
     }
 
     @Override
-    protected View onCreateView(ViewGroup parent) {
-        View view = super.onCreateView(parent);
+    protected View onCreateBottomWidgetView(ViewGroup parent) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.preference_spinner, parent, false);
 
-        ViewGroup container = (ViewGroup) view.findViewById(R.id.pk_bottom_container);
-        LayoutInflater.from(getContext()).inflate(R.layout.preference_spinner, container);
+        mSpinner = (Spinner) view.findViewById(R.id.pk_spinner);
 
         return view;
     }
 
     @Override
-    protected void onBindView(View view) {
-        super.onBindView(view);
+    protected void onBindBottomWidgetView(View widgetView) {
         CharSequence[] entries = getEntries();
         final CharSequence[] entryValues = getEntryValues();
         CharSequence value = getValue();
 
-        mSpinner = (Spinner) view.findViewById(R.id.pk_spinner);
         mSpinner.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 android.R.id.text1, entries));
